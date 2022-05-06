@@ -11,7 +11,7 @@ import static io.harness.rule.OwnerRule.HARSH;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.harness.app.impl.CIManagerTestBase;
+import io.harness.app.impl.STOManagerTestBase;
 import io.harness.category.element.UnitTests;
 import io.harness.mongo.IndexCreator;
 import io.harness.mongo.IndexManagerSession;
@@ -36,7 +36,7 @@ import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.ObjectFactory;
 
 @Slf4j
-public class CIMongoIndexesTest extends CIManagerTestBase {
+public class CIMongoIndexesTest extends STOManagerTestBase {
   @Inject HPersistence persistence;
   @Inject @Named("morphiaClasses") Set<Class> classes;
   @Inject ObjectFactory objectFactory;

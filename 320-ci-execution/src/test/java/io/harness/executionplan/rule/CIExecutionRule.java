@@ -171,7 +171,7 @@ public class CIExecutionRule implements MethodRule, InjectorRuleMixin, MongoRule
                                                  .pvcDefaultStorageSize(25600)
                                                  .stepConfig(ciStepConfig)
                                                  .build(),
-        false));
+        false), ModuleType.CI);
     modules.add(TimeModule.getInstance());
     modules.add(new ProviderModule() {
       @Provides

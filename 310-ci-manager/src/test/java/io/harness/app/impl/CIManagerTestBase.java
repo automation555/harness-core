@@ -18,5 +18,5 @@ import org.mockito.junit.MockitoRule;
 public abstract class CIManagerTestBase extends CategoryTest implements MockableTestMixin {
   @Rule public LifecycleRule lifecycleRule = new LifecycleRule();
   @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
-  @Rule public CIManagerRule orchestrationRule = new CIManagerRule(lifecycleRule.getClosingFactory());
+  @Rule public STOManagerRule orchestrationRule = new STOManagerRule(lifecycleRule.getClosingFactory());
 }
