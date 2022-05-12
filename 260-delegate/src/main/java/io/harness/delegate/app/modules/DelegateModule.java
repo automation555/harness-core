@@ -197,6 +197,7 @@ import io.harness.delegate.task.helm.HelmDeployServiceNG;
 import io.harness.delegate.task.helm.HelmValuesFetchTaskNG;
 import io.harness.delegate.task.helm.HttpHelmConnectivityDelegateTask;
 import io.harness.delegate.task.helm.HttpHelmValidationHandler;
+import io.harness.delegate.task.jenkins.JenkinsTestConnectionDelegateTask;
 import io.harness.delegate.task.jira.JiraTaskNG;
 import io.harness.delegate.task.jira.JiraValidationHandler;
 import io.harness.delegate.task.jira.connection.JiraTestConnectionTaskNG;
@@ -1552,6 +1553,7 @@ public class DelegateModule extends AbstractModule {
     mapBinder.addBinding(TaskType.NG_WINRM_VALIDATION).toInstance(WinRmConfigValidationDelegateTask.class);
     mapBinder.addBinding(TaskType.NG_HOST_CONNECTIVITY_TASK).toInstance(HostConnectivityValidationDelegateTask.class);
     mapBinder.addBinding(TaskType.DOCKER_CONNECTIVITY_TEST_TASK).toInstance(DockerTestConnectionDelegateTask.class);
+    mapBinder.addBinding(TaskType.JENKINS_CONNECTIVITY_TEST_TASK).toInstance(JenkinsTestConnectionDelegateTask.class);
     mapBinder.addBinding(TaskType.NG_AWS_TASK).toInstance(AwsDelegateTask.class);
     mapBinder.addBinding(TaskType.JIRA_CONNECTIVITY_TASK_NG).toInstance(JiraTestConnectionTaskNG.class);
     mapBinder.addBinding(TaskType.JIRA_TASK_NG).toInstance(JiraTaskNG.class);

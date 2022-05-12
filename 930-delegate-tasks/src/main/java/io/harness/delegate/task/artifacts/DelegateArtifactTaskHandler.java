@@ -9,6 +9,7 @@ package io.harness.delegate.task.artifacts;
 
 import io.harness.annotations.dev.HarnessTeam;
 import io.harness.annotations.dev.OwnedBy;
+import io.harness.delegate.task.artifacts.docker.DockerArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.response.ArtifactTaskExecutionResponse;
 import io.harness.exception.InvalidRequestException;
 
@@ -37,6 +38,16 @@ public abstract class DelegateArtifactTaskHandler<T extends ArtifactSourceDelega
   public ArtifactTaskExecutionResponse getImages(T attributesRequest) {
     throw new InvalidRequestException("Operation not supported");
   }
+
+  public abstract ArtifactTaskExecutionResponse getLastSuccessfulBuild(DockerArtifactDelegateRequest attributesRequest);
+
+  public abstract ArtifactTaskExecutionResponse getBuilds(DockerArtifactDelegateRequest attributesRequest);
+
+  public abstract ArtifactTaskExecutionResponse getLabels(DockerArtifactDelegateRequest attributesRequest);
+
+  public abstract ArtifactTaskExecutionResponse validateArtifactServer(DockerArtifactDelegateRequest attributesRequest);
+
+  public abstract ArtifactTaskExecutionResponse validateArtifactImage(DockerArtifactDelegateRequest attributesRequest);
 
   public abstract void decryptRequestDTOs(T dto);
 }

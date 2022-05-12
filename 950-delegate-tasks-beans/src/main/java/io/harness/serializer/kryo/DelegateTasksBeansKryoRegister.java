@@ -170,6 +170,10 @@ import io.harness.delegate.beans.connector.gcpkmsconnector.GcpKmsValidationParam
 import io.harness.delegate.beans.connector.helm.HttpHelmConnectivityTaskParams;
 import io.harness.delegate.beans.connector.helm.HttpHelmConnectivityTaskResponse;
 import io.harness.delegate.beans.connector.helm.HttpHelmValidationParams;
+import io.harness.delegate.beans.connector.jenkins.JenkinsCapabilityHelper;
+import io.harness.delegate.beans.connector.jenkins.JenkinsTestConnectionTaskParams;
+import io.harness.delegate.beans.connector.jenkins.JenkinsTestConnectionTaskResponse;
+import io.harness.delegate.beans.connector.jenkins.JenkinsValidationParams;
 import io.harness.delegate.beans.connector.jira.JiraConnectionTaskParams;
 import io.harness.delegate.beans.connector.jira.JiraValidationParams;
 import io.harness.delegate.beans.connector.jira.connection.JiraTestConnectionTaskNGResponse;
@@ -1454,5 +1458,9 @@ public class DelegateTasksBeansKryoRegister implements KryoRegistrar {
     kryo.register(NotificationProcessingResponse.class, 55217);
     kryo.register(SmtpConfigResponse.class, 55219);
     kryo.register(io.harness.notification.SmtpConfig.class, 55299);
+    kryo.register(JenkinsTestConnectionTaskParams.class, 29117);
+    kryo.register(JenkinsTestConnectionTaskResponse.class, 29118);
+    kryo.register(JenkinsCapabilityHelper.class, 29302);
+    kryo.register(JenkinsValidationParams.class, 29303);
   }
 }
