@@ -13,6 +13,11 @@ import io.harness.delegate.task.artifacts.docker.DockerArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.response.ArtifactTaskExecutionResponse;
 import io.harness.exception.InvalidRequestException;
 
+import software.wings.helpers.ext.jenkins.JobDetails;
+
+import java.net.URISyntaxException;
+import java.util.List;
+
 @OwnedBy(HarnessTeam.PIPELINE)
 public abstract class DelegateArtifactTaskHandler<T extends ArtifactSourceDelegateRequest> {
   public ArtifactTaskExecutionResponse getLastSuccessfulBuild(T attributesRequest) {
@@ -27,7 +32,7 @@ public abstract class DelegateArtifactTaskHandler<T extends ArtifactSourceDelega
     throw new InvalidRequestException("Operation not supported");
   }
 
-  public ArtifactTaskExecutionResponse validateArtifactServer(T attributesRequest) {
+  public ArtifactTaskExecutionResponse validateArtifactServer(T attributesRequest) throws URISyntaxException {
     throw new InvalidRequestException("Operation not supported");
   }
 
@@ -39,15 +44,13 @@ public abstract class DelegateArtifactTaskHandler<T extends ArtifactSourceDelega
     throw new InvalidRequestException("Operation not supported");
   }
 
-  public abstract ArtifactTaskExecutionResponse getLastSuccessfulBuild(DockerArtifactDelegateRequest attributesRequest);
+  public ArtifactTaskExecutionResponse getJob(T attributesRequest) {
+    throw new InvalidRequestException("Operation not supported");
+  }
 
-  public abstract ArtifactTaskExecutionResponse getBuilds(DockerArtifactDelegateRequest attributesRequest);
-
-  public abstract ArtifactTaskExecutionResponse getLabels(DockerArtifactDelegateRequest attributesRequest);
-
-  public abstract ArtifactTaskExecutionResponse validateArtifactServer(DockerArtifactDelegateRequest attributesRequest);
-
-  public abstract ArtifactTaskExecutionResponse validateArtifactImage(DockerArtifactDelegateRequest attributesRequest);
+  public ArtifactTaskExecutionResponse getArtifactPaths(T attributesRequest) {
+    throw new InvalidRequestException("Operation not supported");
+  }
 
   public abstract void decryptRequestDTOs(T dto);
 }

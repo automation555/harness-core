@@ -43,7 +43,7 @@ public class JenkinsDTOToEntity implements ConnectorDTOToEntityMapper<JenkinsCon
     }
 
     JenkinsConnector jenkinsConnector = jenkinsConnectorBuilder.build();
-    jenkinsConnector.setType(ConnectorType.Jenkins);
+    jenkinsConnector.setType(ConnectorType.JENKINS);
     return jenkinsConnector;
   }
 

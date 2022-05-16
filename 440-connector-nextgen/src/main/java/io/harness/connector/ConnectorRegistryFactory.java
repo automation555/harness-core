@@ -295,7 +295,7 @@ public class ConnectorRegistryFactory {
         new ConnectorRegistrar(ConnectorCategory.CLOUD_PROVIDER, PhysicalDataCenterConnectorValidator.class,
             PhysicalDataCenterConnectorValidationParamsProvider.class, PhysicalDataCenterDTOToEntity.class,
             PhysicalDataCenterEntityToDTO.class, NotSupportedValidationHandler.class));
-    registrar.put(ConnectorType.Jenkins,
+    registrar.put(ConnectorType.JENKINS,
         new ConnectorRegistrar(ConnectorCategory.ARTIFACTORY, JenkinsConnectionValidator.class,
             JenkinsConnectorValidationsParamsProvider.class, JenkinsDTOToEntity.class, JenkinsEntityToDTO.class,
             NotSupportedValidationHandler.class));

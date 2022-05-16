@@ -6,26 +6,18 @@
  */
 
 package io.harness.delegate.task.artifacts.jenkins;
-
-import io.harness.artifacts.beans.BuildDetailsInternal;
-import io.harness.artifacts.comparator.BuildDetailsInternalComparatorDescending;
-import io.harness.artifacts.docker.service.DockerRegistryService;
+import io.harness.artifacts.jenkins.service.JenkinsRegistryService;
 import io.harness.data.structure.EmptyPredicate;
 import io.harness.delegate.task.artifacts.DelegateArtifactTaskHandler;
-import io.harness.delegate.task.artifacts.docker.DockerArtifactDelegateRequest;
-import io.harness.delegate.task.artifacts.docker.DockerArtifactDelegateResponse;
-import io.harness.delegate.task.artifacts.mappers.DockerRequestResponseMapper;
+import io.harness.delegate.task.artifacts.mappers.JenkinsRequestResponseMapper;
 import io.harness.delegate.task.artifacts.response.ArtifactTaskExecutionResponse;
 import io.harness.security.encryption.SecretDecryptionService;
 
-import software.wings.service.intfc.JenkinsBuildService;
+import software.wings.helpers.ext.jenkins.JobDetails;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -33,63 +25,24 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PACKAGE, onConstructor = @__({ @Inject }))
 public class JenkinsArtifactTaskHandler extends DelegateArtifactTaskHandler<JenkinsArtifactDelegateRequest> {
   private final SecretDecryptionService secretDecryptionService;
-  private final DockerRegistryService dockerRegistryService;
-  private final JenkinsBuildService jenkinsBuildService;
+  private final JenkinsRegistryService jenkinsRegistryService;
 
   @Override
-  public ArtifactTaskExecutionResponse getLastSuccessfulBuild(DockerArtifactDelegateRequest attributesRequest) {
-    BuildDetailsInternal lastSuccessfulBuild;
-    if (isRegex(attributesRequest)) {
-      lastSuccessfulBuild = dockerRegistryService.getLastSuccessfulBuildFromRegex(
-          DockerRequestResponseMapper.toDockerInternalConfig(attributesRequest), attributesRequest.getImagePath(),
-          attributesRequest.getTagRegex());
-    } else {
-      lastSuccessfulBuild =
-          dockerRegistryService.verifyBuildNumber(DockerRequestResponseMapper.toDockerInternalConfig(attributesRequest),
-              attributesRequest.getImagePath(), attributesRequest.getTag());
-    }
-    DockerArtifactDelegateResponse dockerArtifactDelegateResponse =
-        DockerRequestResponseMapper.toDockerResponse(lastSuccessfulBuild, attributesRequest);
-    return getSuccessTaskExecutionResponse(Collections.singletonList(dockerArtifactDelegateResponse));
-  }
-
-  @Override
-  public ArtifactTaskExecutionResponse getBuilds(DockerArtifactDelegateRequest attributesRequest) {
-    List<BuildDetailsInternal> builds =
-        dockerRegistryService.getBuilds(DockerRequestResponseMapper.toDockerInternalConfig(attributesRequest),
-            attributesRequest.getImagePath(), DockerRegistryService.MAX_NO_OF_TAGS_PER_IMAGE);
-    List<DockerArtifactDelegateResponse> dockerArtifactDelegateResponseList =
-        builds.stream()
-            .sorted(new BuildDetailsInternalComparatorDescending())
-            .map(build -> DockerRequestResponseMapper.toDockerResponse(build, attributesRequest))
-            .collect(Collectors.toList());
-    return getSuccessTaskExecutionResponse(dockerArtifactDelegateResponseList);
-  }
-
-  @Override
-  public ArtifactTaskExecutionResponse getLabels(DockerArtifactDelegateRequest attributesRequest) {
-    List<Map<String, String>> labels =
-        dockerRegistryService.getLabels(DockerRequestResponseMapper.toDockerInternalConfig(attributesRequest),
-            attributesRequest.getImagePath(), attributesRequest.getTagsList());
-    return getSuccessTaskExecutionResponse(DockerRequestResponseMapper.toDockerResponse(labels, attributesRequest));
-  }
-
-  @Override
-  public ArtifactTaskExecutionResponse validateArtifactServer(DockerArtifactDelegateRequest attributesRequest) {
-    boolean isServerValidated = dockerRegistryService.validateCredentials(
-        DockerRequestResponseMapper.toDockerInternalConfig(attributesRequest));
+  public ArtifactTaskExecutionResponse validateArtifactServer(JenkinsArtifactDelegateRequest attributesRequest) {
+    boolean isServerValidated = jenkinsRegistryService.validateCredentials(
+        JenkinsRequestResponseMapper.toJenkinsInternalConfig(attributesRequest));
     return ArtifactTaskExecutionResponse.builder().isArtifactServerValid(isServerValidated).build();
   }
 
   @Override
-  public ArtifactTaskExecutionResponse validateArtifactImage(DockerArtifactDelegateRequest attributesRequest) {
-    boolean isArtifactImageValid = dockerRegistryService.verifyImageName(
-        DockerRequestResponseMapper.toDockerInternalConfig(attributesRequest), attributesRequest.getImagePath());
-    return ArtifactTaskExecutionResponse.builder().isArtifactSourceValid(isArtifactImageValid).build();
+  public ArtifactTaskExecutionResponse getJob(JenkinsArtifactDelegateRequest artifactDelegateRequest) {
+    List<JobDetails> jobDetails =
+        jenkinsRegistryService.getJobs(JenkinsRequestResponseMapper.toJenkinsInternalConfig(artifactDelegateRequest));
+    return ArtifactTaskExecutionResponse.builder().jobDetails(jobDetails).build();
   }
 
   private ArtifactTaskExecutionResponse getSuccessTaskExecutionResponse(
-      List<DockerArtifactDelegateResponse> responseList) {
+      List<JenkinsArtifactDelegateResponse> responseList) {
     return ArtifactTaskExecutionResponse.builder()
         .artifactDelegateResponses(responseList)
         .isArtifactSourceValid(true)
@@ -97,7 +50,7 @@ public class JenkinsArtifactTaskHandler extends DelegateArtifactTaskHandler<Jenk
         .build();
   }
 
-  boolean isRegex(DockerArtifactDelegateRequest artifactDelegateRequest) {
+  boolean isRegex(JenkinsArtifactDelegateRequest artifactDelegateRequest) {
     return EmptyPredicate.isNotEmpty(artifactDelegateRequest.getTagRegex());
   }
 

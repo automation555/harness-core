@@ -24,26 +24,21 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Value
 @Builder
-@ToString(exclude = "password")
 @OwnedBy(HarnessTeam.CDC)
 public class JenkinsInternalConfig {
-  public static final String USERNAME_DEFAULT_TEXT = "UserName/Password";
-  @Attributes(title = "Jenkins URL", required = true) @NotEmpty private String jenkinsUrl;
+  String jenkinsUrl;
+  String username;
+  char[] password;
+  char[] token;
+  String authMechanism;
   boolean isCertValidationRequired;
-  @Attributes(title = "Authentication Mechanism", required = true,
-      enums = {USERNAME_DEFAULT_TEXT, JenkinsRegistryUtils.TOKEN_FIELD})
-  @NotEmpty
-  private String authMechanism;
-
-  @Attributes(title = "Username") private String username;
-  @Attributes(title = "Password/ API Token") @Encrypted(fieldName = "password/api_token") private char[] password;
-  @Attributes(title = "Bearer Token(HTTP Header)") @Encrypted(fieldName = "bearer_token") private char[] token;
+  private boolean useConnectorUrlForJobExecution;
 
   public boolean hasCredentials() {
     return isNotEmpty(username);
   }
 
-  public String getDockerRegistryUrl() {
+  public String getJenkinsRegistryUrl() {
     URI uri = UriBuilder.fromUri(jenkinsUrl).build();
     return UriBuilder.fromUri(jenkinsUrl).path(uri.getPath().endsWith("/") ? "" : "/").build().toString();
   }

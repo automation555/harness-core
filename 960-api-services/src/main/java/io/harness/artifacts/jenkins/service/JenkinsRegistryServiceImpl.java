@@ -16,11 +16,11 @@ import io.harness.annotations.dev.OwnedBy;
 import io.harness.artifacts.jenkins.beans.JenkinsInternalConfig;
 import io.harness.exception.ArtifactServerException;
 
-import software.wings.helpers.ext.jenkins.Jenkins;
-import software.wings.service.impl.jenkins.JenkinsUtils;
+import software.wings.helpers.ext.jenkins.JobDetails;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @OwnedBy(CDC)
@@ -31,7 +31,7 @@ public class JenkinsRegistryServiceImpl implements JenkinsRegistryService {
 
   @Override
   public boolean validateCredentials(JenkinsInternalConfig jenkinsInternalConfig) {
-    if (JenkinsUtils.TOKEN_FIELD.equals(jenkinsInternalConfig.getAuthMechanism())) {
+    if (JenkinsRegistryUtils.TOKEN_FIELD.equals(jenkinsInternalConfig.getAuthMechanism())) {
       if (isEmpty(new String(jenkinsInternalConfig.getToken()))) {
         throw new ArtifactServerException("Token should be not empty", USER);
       }
@@ -46,8 +46,11 @@ public class JenkinsRegistryServiceImpl implements JenkinsRegistryService {
           "Could not reach Jenkins Server at : " + jenkinsInternalConfig.getJenkinsUrl(), USER);
     }
 
-    Jenkins jenkins = jenkinsRegistryUtils.getJenkins(jenkinsInternalConfig);
+    return jenkinsRegistryUtils.isRunning(jenkinsInternalConfig);
+  }
 
-    return jenkins.isRunning();
+  @Override
+  public List<JobDetails> getJobs(JenkinsInternalConfig jenkinsInternalConfig) {
+    return jenkinsRegistryUtils.getJobs(jenkinsInternalConfig, null);
   }
 }

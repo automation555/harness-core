@@ -17,6 +17,7 @@ import io.harness.delegate.task.artifacts.ArtifactTaskType;
 import io.harness.delegate.task.artifacts.docker.DockerArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.docker.DockerArtifactTaskHelper;
 import io.harness.delegate.task.artifacts.jenkins.JenkinsArtifactDelegateRequest;
+import io.harness.delegate.task.artifacts.jenkins.JenkinsArtifactTaskHelper;
 import io.harness.delegate.task.artifacts.request.ArtifactTaskParameters;
 import io.harness.delegate.task.artifacts.response.ArtifactTaskResponse;
 import io.harness.errorhandling.NGErrorHelper;
@@ -25,7 +26,7 @@ import com.google.inject.Inject;
 import java.util.Collections;
 
 public class JenkinsValidationHandler implements ConnectorValidationHandler {
-  @Inject private DockerArtifactTaskHelper dockerArtifactTaskHelper;
+  @Inject private JenkinsArtifactTaskHelper jenkinsArtifactTaskHelper;
   @Inject private NGErrorHelper ngErrorHelper;
 
   @Override
@@ -42,7 +43,7 @@ public class JenkinsValidationHandler implements ConnectorValidationHandler {
                             .build())
             .build();
     ArtifactTaskResponse validationResponse =
-        dockerArtifactTaskHelper.getArtifactCollectResponse(artifactTaskParameters);
+        jenkinsArtifactTaskHelper.getArtifactCollectResponse(artifactTaskParameters);
     boolean isDockerCredentialsValid = false;
     ConnectorValidationResult.ConnectorValidationResultBuilder validationResultBuilder =
         ConnectorValidationResult.builder();

@@ -18,6 +18,7 @@ import io.harness.delegate.beans.connector.awsconnector.AwsConnectorDTO;
 import io.harness.delegate.beans.connector.azureconnector.AzureConnectorDTO;
 import io.harness.delegate.beans.connector.docker.DockerConnectorDTO;
 import io.harness.delegate.beans.connector.gcpconnector.GcpConnectorDTO;
+import io.harness.delegate.beans.connector.jenkins.JenkinsConnectorDTO;
 import io.harness.delegate.beans.connector.nexusconnector.NexusConnectorDTO;
 import io.harness.delegate.task.artifacts.artifactory.ArtifactoryArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.artifactory.ArtifactoryGenericArtifactDelegateRequest;
@@ -25,6 +26,7 @@ import io.harness.delegate.task.artifacts.azure.AcrArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.docker.DockerArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.ecr.EcrArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.gcr.GcrArtifactDelegateRequest;
+import io.harness.delegate.task.artifacts.jenkins.JenkinsArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.nexus.NexusArtifactDelegateRequest;
 import io.harness.security.encryption.EncryptedDataDetail;
 
@@ -150,6 +152,21 @@ public class ArtifactDelegateRequestUtils {
         .artifactPathFilter(artifactPathFilter)
         .connectorRef(connectorRef)
         .artifactoryConnectorDTO(artifactoryConnectorDTO)
+        .encryptedDataDetails(encryptedDataDetails)
+        .sourceType(sourceType)
+        .build();
+  }
+
+  public JenkinsArtifactDelegateRequest getJenkinsDelegateRequest(String imagePath, String tag, String tagRegex,
+      List<String> tagsList, String connectorRef, JenkinsConnectorDTO jenkinsConnectorDTO,
+      List<EncryptedDataDetail> encryptedDataDetails, ArtifactSourceType sourceType) {
+    return JenkinsArtifactDelegateRequest.builder()
+        .imagePath(trim(imagePath))
+        .tag(trim(tag))
+        .tagRegex(trim(tagRegex))
+        .tagsList(tagsList)
+        .connectorRef(connectorRef)
+        .jenkinsConnectorDTO(jenkinsConnectorDTO)
         .encryptedDataDetails(encryptedDataDetails)
         .sourceType(sourceType)
         .build();

@@ -38,7 +38,9 @@ public class JenkinsAuthenticationDTODeserializer extends StdDeserializer<Jenkin
     ObjectMapper mapper = (ObjectMapper) jp.getCodec();
     if (type == JenkinsAuthType.USER_PASSWORD) {
       jenkinsAuthentication = mapper.readValue(authSpec.toString(), JenkinsUserNamePasswordDTO.class);
-    } else if (type == JenkinsAuthType.ANONYMOUS) {
+    } else if (type == JenkinsAuthType.BEARER_TOKEN) {
+      jenkinsAuthentication = mapper.readValue(authSpec.toString(), JenkinsBearerTokenDTO.class);
+    } else {
       if (authSpec != null && !authSpec.isNull()) {
         throw new InvalidRequestException("No spec should be provided with the anonymous type");
       }

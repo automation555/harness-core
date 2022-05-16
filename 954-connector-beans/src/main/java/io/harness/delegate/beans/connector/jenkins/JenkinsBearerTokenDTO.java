@@ -24,8 +24,7 @@ import lombok.Data;
 @Data
 @Builder
 @OneOfField(fields = {"tokenRef"})
-@Schema(
-    name = "JenkinsUserNamePasswordDTO", description = "This entity contains the details of the Jenkins Bearer token")
+@Schema(name = "JenkinsBearerTokenDTO", description = "This entity contains the details of the Jenkins Bearer token")
 public class JenkinsBearerTokenDTO implements JenkinsAuthCredentialsDTO {
   @ApiModelProperty(dataType = "string") @NotNull @SecretReference SecretRefData tokenRef;
 }

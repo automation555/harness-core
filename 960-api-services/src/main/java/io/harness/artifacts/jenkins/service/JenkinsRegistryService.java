@@ -12,6 +12,11 @@ import static io.harness.annotations.dev.HarnessTeam.CDC;
 import io.harness.annotations.dev.OwnedBy;
 import io.harness.artifacts.jenkins.beans.JenkinsInternalConfig;
 
+import software.wings.helpers.ext.jenkins.JobDetails;
+
+import java.net.URISyntaxException;
+import java.util.List;
+
 @OwnedBy(CDC)
 public interface JenkinsRegistryService {
   /**
@@ -21,4 +26,6 @@ public interface JenkinsRegistryService {
    * @return boolean validate
    */
   boolean validateCredentials(JenkinsInternalConfig jenkinsInternalConfig);
+
+  List<JobDetails> getJobs(JenkinsInternalConfig jenkinsInternalConfig);
 }

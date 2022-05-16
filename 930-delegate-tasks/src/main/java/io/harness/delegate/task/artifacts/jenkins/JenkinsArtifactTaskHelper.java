@@ -10,9 +10,6 @@ package io.harness.delegate.task.artifacts.jenkins;
 import io.harness.annotations.dev.HarnessTeam;
 import io.harness.annotations.dev.OwnedBy;
 import io.harness.context.MdcGlobalContextData;
-import io.harness.delegate.task.artifacts.docker.DockerArtifactDelegateRequest;
-import io.harness.delegate.task.artifacts.docker.DockerArtifactDelegateResponse;
-import io.harness.delegate.task.artifacts.docker.DockerArtifactTaskHandler;
 import io.harness.delegate.task.artifacts.request.ArtifactTaskParameters;
 import io.harness.delegate.task.artifacts.response.ArtifactTaskExecutionResponse;
 import io.harness.delegate.task.artifacts.response.ArtifactTaskResponse;
@@ -35,57 +32,67 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Singleton
 public class JenkinsArtifactTaskHelper {
-  private final DockerArtifactTaskHandler dockerArtifactTaskHandler;
+  private final JenkinsArtifactTaskHandler jenkinsArtifactTaskHandler;
 
   public ArtifactTaskResponse getArtifactCollectResponse(
       ArtifactTaskParameters artifactTaskParameters, LogCallback executionLogCallback) {
-    DockerArtifactDelegateRequest attributes = (DockerArtifactDelegateRequest) artifactTaskParameters.getAttributes();
-    String registryUrl = attributes.getDockerConnectorDTO().getDockerRegistryUrl();
-    dockerArtifactTaskHandler.decryptRequestDTOs(attributes);
+    JenkinsArtifactDelegateRequest attributes = (JenkinsArtifactDelegateRequest) artifactTaskParameters.getAttributes();
+    String registryUrl = attributes.getJenkinsConnectorDTO().getJenkinsUrl();
+    jenkinsArtifactTaskHandler.decryptRequestDTOs(attributes);
     ArtifactTaskResponse artifactTaskResponse;
     try {
       switch (artifactTaskParameters.getArtifactTaskType()) {
-        case GET_LAST_SUCCESSFUL_BUILD:
-          saveLogs(executionLogCallback, "Fetching Artifact details");
-          artifactTaskResponse = getSuccessTaskResponse(dockerArtifactTaskHandler.getLastSuccessfulBuild(attributes));
-          DockerArtifactDelegateResponse dockerArtifactDelegateResponse =
-              (DockerArtifactDelegateResponse) (artifactTaskResponse.getArtifactTaskExecutionResponse()
-                                                    .getArtifactDelegateResponses()
-                                                    .size()
-                          != 0
-                      ? artifactTaskResponse.getArtifactTaskExecutionResponse().getArtifactDelegateResponses().get(0)
-                      : DockerArtifactDelegateResponse.builder().build());
-          saveLogs(executionLogCallback,
-              "Fetched Artifact details \n  type: Dockerhub\n  imagePath: "
-                  + dockerArtifactDelegateResponse.getImagePath()
-                  + "\n  tag: " + dockerArtifactDelegateResponse.getTag());
-          break;
-        case GET_BUILDS:
-          saveLogs(executionLogCallback, "Fetching artifact details");
-          artifactTaskResponse = getSuccessTaskResponse(dockerArtifactTaskHandler.getBuilds(attributes));
-          saveLogs(executionLogCallback,
-              "Fetched " + artifactTaskResponse.getArtifactTaskExecutionResponse().getArtifactDelegateResponses().size()
-                  + " artifacts");
-          break;
-        case GET_LABELS:
-          saveLogs(executionLogCallback, "Fetching labels");
-          artifactTaskResponse = getSuccessTaskResponse(dockerArtifactTaskHandler.getLabels(attributes));
-          saveLogs(executionLogCallback,
-              "Fetched labels: "
-                  + artifactTaskResponse.getArtifactTaskExecutionResponse().getArtifactDelegateResponses().toString());
-          break;
+          //        case GET_LAST_SUCCESSFUL_BUILD:
+          //          saveLogs(executionLogCallback, "Fetching Artifact details");
+          //          artifactTaskResponse =
+          //          getSuccessTaskResponse(dockerArtifactTaskHandler.getLastSuccessfulBuild(attributes));
+          //          DockerArtifactDelegateResponse dockerArtifactDelegateResponse =
+          //              (DockerArtifactDelegateResponse) (artifactTaskResponse.getArtifactTaskExecutionResponse()
+          //                                                    .getArtifactDelegateResponses()
+          //                                                    .size()
+          //                          != 0
+          //                      ?
+          //                      artifactTaskResponse.getArtifactTaskExecutionResponse().getArtifactDelegateResponses().get(0)
+          //                      : DockerArtifactDelegateResponse.builder().build());
+          //          saveLogs(executionLogCallback,
+          //              "Fetched Artifact details \n  type: Dockerhub\n  imagePath: "
+          //                  + dockerArtifactDelegateResponse.getImagePath()
+          //                  + "\n  tag: " + dockerArtifactDelegateResponse.getTag());
+          //          break;
+          //        case GET_BUILDS:
+          //          saveLogs(executionLogCallback, "Fetching artifact details");
+          //          artifactTaskResponse = getSuccessTaskResponse(dockerArtifactTaskHandler.getBuilds(attributes));
+          //          saveLogs(executionLogCallback,
+          //              "Fetched " +
+          //              artifactTaskResponse.getArtifactTaskExecutionResponse().getArtifactDelegateResponses().size()
+          //                  + " artifacts");
+          //          break;
+          //        case GET_LABELS:
+          //          saveLogs(executionLogCallback, "Fetching labels");
+          //          artifactTaskResponse = getSuccessTaskResponse(dockerArtifactTaskHandler.getLabels(attributes));
+          //          saveLogs(executionLogCallback,
+          //              "Fetched labels: "
+          //                  +
+          //                  artifactTaskResponse.getArtifactTaskExecutionResponse().getArtifactDelegateResponses().toString());
+          //          break;
         case VALIDATE_ARTIFACT_SERVER:
           saveLogs(executionLogCallback, "Validating  Artifact Server");
-          artifactTaskResponse = getSuccessTaskResponse(dockerArtifactTaskHandler.validateArtifactServer(attributes));
+          artifactTaskResponse = getSuccessTaskResponse(jenkinsArtifactTaskHandler.validateArtifactServer(attributes));
           saveLogs(executionLogCallback, "validated artifact server: " + registryUrl);
           break;
-        case VALIDATE_ARTIFACT_SOURCE:
-          saveLogs(executionLogCallback, "Validating Artifact Source");
-          artifactTaskResponse = getSuccessTaskResponse(dockerArtifactTaskHandler.validateArtifactImage(attributes));
-          saveLogs(executionLogCallback,
-              "Artifact Source is valid: " + registryUrl + (registryUrl.endsWith("/") ? "" : "/")
-                  + attributes.getImagePath());
+        case GET_JOBS:
+          saveLogs(executionLogCallback, "Get the Jenkins Job");
+          artifactTaskResponse = getSuccessTaskResponse(jenkinsArtifactTaskHandler.getJob(attributes));
+          saveLogs(executionLogCallback, "Get the Jenkins Job " + registryUrl);
           break;
+          //        case VALIDATE_ARTIFACT_SOURCE:
+          //          saveLogs(executionLogCallback, "Validating Artifact Source");
+          //          artifactTaskResponse =
+          //          getSuccessTaskResponse(dockerArtifactTaskHandler.validateArtifactImage(attributes));
+          //          saveLogs(executionLogCallback,
+          //              "Artifact Source is valid: " + registryUrl + (registryUrl.endsWith("/") ? "" : "/")
+          //                  + attributes.getImagePath());
+          //          break;
         default:
           saveLogs(executionLogCallback,
               "No corresponding Docker artifact task type [{}]: " + artifactTaskParameters.toString());

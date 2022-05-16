@@ -58,7 +58,7 @@ public enum ConnectorType implements EntitySubtype {
   @JsonProperty("ErrorTracking") ERROR_TRACKING("ErrorTracking"),
   @JsonProperty("Pdc") PDC("Pdc"),
   @JsonProperty("AzureRepo") AZURE_REPO("AzureRepo"),
-  @JsonProperty("Jenkins") Jenkins("Jenkins");
+  @JsonProperty("Jenkins") JENKINS("Jenkins");
   private final String displayName;
 
   @JsonCreator(mode = JsonCreator.Mode.DELEGATING)

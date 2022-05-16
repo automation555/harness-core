@@ -11,7 +11,6 @@ import io.harness.delegate.beans.connector.ConnectorTaskParams;
 import io.harness.delegate.beans.connector.ConnectorType;
 import io.harness.delegate.beans.connector.ConnectorValidationParams;
 import io.harness.delegate.beans.connector.docker.DockerCapabilityHelper;
-import io.harness.delegate.beans.connector.docker.DockerConnectorDTO;
 import io.harness.delegate.beans.executioncapability.ExecutionCapability;
 import io.harness.delegate.beans.executioncapability.ExecutionCapabilityDemander;
 import io.harness.expression.ExpressionEvaluator;
@@ -35,6 +34,6 @@ public class JenkinsValidationParams
 
   @Override
   public ConnectorType getConnectorType() {
-    return ConnectorType.Jenkins;
+    return ConnectorType.JENKINS;
   }
 }

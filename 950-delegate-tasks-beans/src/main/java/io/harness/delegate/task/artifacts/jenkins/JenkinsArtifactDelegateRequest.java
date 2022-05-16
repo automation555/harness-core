@@ -21,6 +21,8 @@ import io.harness.delegate.task.mixin.HttpConnectionExecutionCapabilityGenerator
 import io.harness.expression.ExpressionEvaluator;
 import io.harness.security.encryption.EncryptedDataDetail;
 
+import software.wings.helpers.ext.jenkins.JobDetails;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
@@ -41,6 +43,7 @@ public class JenkinsArtifactDelegateRequest implements ArtifactSourceDelegateReq
   /** List of buildNumbers/tags */
   List<String> tagsList;
   String connectorRef;
+  List<JobDetails> jobDetails;
   /** DockerHub Connector*/
   JenkinsConnectorDTO jenkinsConnectorDTO;
   /** Encrypted details for decrypting.*/

@@ -20,21 +20,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @OwnedBy(HarnessTeam.CDC)
-@TargetModule(_960_API_SERVICES)
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class ParametersDefinitionProperty extends BaseModel {
-  private String name;
-  private String description;
-  private DefaultParameterValue defaultParameterValue;
-  private String type;
-  private List<String> choices;
-
-  @Data
-  @Builder
-  public static class DefaultParameterValue {
-    private String name;
-    private String value;
-  }
+public class JobProperty extends BaseModel {
+  private List<ParametersDefinitionProperty> parameterDefinitions;
 }

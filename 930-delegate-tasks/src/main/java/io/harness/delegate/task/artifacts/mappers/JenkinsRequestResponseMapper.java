@@ -7,34 +7,58 @@
 
 package io.harness.delegate.task.artifacts.mappers;
 
+import io.harness.artifacts.jenkins.beans.JenkinsInternalConfig;
 import io.harness.data.structure.EmptyPredicate;
+import io.harness.delegate.beans.connector.jenkins.JenkinsBearerTokenDTO;
+import io.harness.delegate.beans.connector.jenkins.JenkinsConstant;
 import io.harness.delegate.beans.connector.jenkins.JenkinsUserNamePasswordDTO;
 import io.harness.delegate.task.artifacts.jenkins.JenkinsArtifactDelegateRequest;
 import io.harness.utils.FieldWithPlainTextOrSecretValueHelper;
 
-import software.wings.beans.JenkinsConfig;
+import software.wings.service.impl.jenkins.JenkinsUtils;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class JenkinsRequestResponseMapper {
-  public JenkinsConfig toJenkinsConfig(JenkinsArtifactDelegateRequest request) {
+  public JenkinsInternalConfig toJenkinsInternalConfig(JenkinsArtifactDelegateRequest request) {
     String password = "";
     String username = "";
+    String token = "";
     if (request.getJenkinsConnectorDTO().getAuth() != null
         && request.getJenkinsConnectorDTO().getAuth().getCredentials() != null) {
-      JenkinsUserNamePasswordDTO credentials =
-          (JenkinsUserNamePasswordDTO) request.getJenkinsConnectorDTO().getAuth().getCredentials();
-      if (credentials.getPasswordRef() != null) {
-        password = EmptyPredicate.isNotEmpty(credentials.getPasswordRef().getDecryptedValue())
-            ? new String(credentials.getPasswordRef().getDecryptedValue())
-            : null;
+      if (request.getJenkinsConnectorDTO().getAuth().getAuthType().getDisplayName() == JenkinsConstant.BEARER_TOKEN) {
+        JenkinsBearerTokenDTO jenkinsBearerTokenDTO =
+            (JenkinsBearerTokenDTO) request.getJenkinsConnectorDTO().getAuth().getCredentials();
+        if (jenkinsBearerTokenDTO.getTokenRef() != null) {
+          token = EmptyPredicate.isNotEmpty(jenkinsBearerTokenDTO.getTokenRef().getDecryptedValue())
+              ? new String(jenkinsBearerTokenDTO.getTokenRef().getDecryptedValue())
+              : null;
+        }
+      } else if (request.getJenkinsConnectorDTO().getAuth().getAuthType().getDisplayName()
+          == JenkinsConstant.USERNAME_PASSWORD) {
+        JenkinsUserNamePasswordDTO credentials =
+            (JenkinsUserNamePasswordDTO) request.getJenkinsConnectorDTO().getAuth().getCredentials();
+        if (credentials.getPasswordRef() != null) {
+          password = EmptyPredicate.isNotEmpty(credentials.getPasswordRef().getDecryptedValue())
+              ? new String(credentials.getPasswordRef().getDecryptedValue())
+              : null;
+        }
+        if (credentials.getPasswordRef() != null) {
+          password = EmptyPredicate.isNotEmpty(credentials.getPasswordRef().getDecryptedValue())
+              ? new String(credentials.getPasswordRef().getDecryptedValue())
+              : null;
+        }
+        username = FieldWithPlainTextOrSecretValueHelper.getSecretAsStringFromPlainTextOrSecretRef(
+            credentials.getUsername(), credentials.getUsernameRef());
       }
-      username = FieldWithPlainTextOrSecretValueHelper.getSecretAsStringFromPlainTextOrSecretRef(
-          credentials.getUsername(), credentials.getUsernameRef());
     }
-    return JenkinsConfig.builder()
+    return JenkinsInternalConfig.builder()
         .jenkinsUrl(request.getJenkinsConnectorDTO().getJenkinsUrl())
         .authMechanism(request.getJenkinsConnectorDTO().getAuth().getAuthType().getDisplayName())
         .username(username)
         .password(password.toCharArray())
+        .token(token.toCharArray())
         .build();
   }
 }

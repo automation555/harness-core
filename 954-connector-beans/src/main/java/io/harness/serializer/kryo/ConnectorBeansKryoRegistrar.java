@@ -97,6 +97,7 @@ import io.harness.delegate.beans.connector.helm.HttpHelmUsernamePasswordDTO;
 import io.harness.delegate.beans.connector.jenkins.JenkinsAuthCredentialsDTO;
 import io.harness.delegate.beans.connector.jenkins.JenkinsAuthType;
 import io.harness.delegate.beans.connector.jenkins.JenkinsAuthenticationDTO;
+import io.harness.delegate.beans.connector.jenkins.JenkinsBearerTokenDTO;
 import io.harness.delegate.beans.connector.jenkins.JenkinsConnectorDTO;
 import io.harness.delegate.beans.connector.jenkins.JenkinsUserNamePasswordDTO;
 import io.harness.delegate.beans.connector.jira.JiraConnectorDTO;
@@ -390,5 +391,6 @@ public class ConnectorBeansKryoRegistrar implements KryoRegistrar {
     kryo.register(JenkinsAuthType.class, 29114);
     kryo.register(JenkinsConnectorDTO.class, 29115);
     kryo.register(JenkinsUserNamePasswordDTO.class, 29116);
+    kryo.register(JenkinsBearerTokenDTO.class, 29130);
   }
 }
