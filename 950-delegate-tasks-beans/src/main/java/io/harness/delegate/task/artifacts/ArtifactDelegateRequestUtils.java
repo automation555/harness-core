@@ -30,6 +30,8 @@ import io.harness.delegate.task.artifacts.jenkins.JenkinsArtifactDelegateRequest
 import io.harness.delegate.task.artifacts.nexus.NexusArtifactDelegateRequest;
 import io.harness.security.encryption.EncryptedDataDetail;
 
+import software.wings.helpers.ext.jenkins.JobDetails;
+
 import java.util.List;
 import lombok.experimental.UtilityClass;
 
@@ -157,18 +159,19 @@ public class ArtifactDelegateRequestUtils {
         .build();
   }
 
-  public JenkinsArtifactDelegateRequest getJenkinsDelegateRequest(String imagePath, String tag, String tagRegex,
-      List<String> tagsList, String connectorRef, JenkinsConnectorDTO jenkinsConnectorDTO,
-      List<EncryptedDataDetail> encryptedDataDetails, ArtifactSourceType sourceType) {
+  public JenkinsArtifactDelegateRequest getJenkinsDelegateRequest(String connectorRef,
+      JenkinsConnectorDTO jenkinsConnectorDTO, List<EncryptedDataDetail> encryptedDataDetails,
+      ArtifactSourceType sourceType, List<JobDetails> jobDetails, String parentJobName, String jobName,
+      List<String> artifactPath) {
     return JenkinsArtifactDelegateRequest.builder()
-        .imagePath(trim(imagePath))
-        .tag(trim(tag))
-        .tagRegex(trim(tagRegex))
-        .tagsList(tagsList)
         .connectorRef(connectorRef)
         .jenkinsConnectorDTO(jenkinsConnectorDTO)
         .encryptedDataDetails(encryptedDataDetails)
         .sourceType(sourceType)
+        .jobDetails(jobDetails)
+        .parentJobName(parentJobName)
+        .jobName(jobName)
+        .artifactPaths(artifactPath)
         .build();
   }
 

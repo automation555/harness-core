@@ -6,17 +6,29 @@
  */
 
 package io.harness.delegate.task.artifacts.jenkins;
+import static io.harness.exception.WingsException.USER;
+
+import static java.util.stream.Collectors.toList;
+
 import io.harness.artifacts.jenkins.service.JenkinsRegistryService;
 import io.harness.data.structure.EmptyPredicate;
 import io.harness.delegate.task.artifacts.DelegateArtifactTaskHandler;
 import io.harness.delegate.task.artifacts.mappers.JenkinsRequestResponseMapper;
 import io.harness.delegate.task.artifacts.response.ArtifactTaskExecutionResponse;
+import io.harness.exception.ArtifactServerException;
+import io.harness.exception.ExceptionUtils;
+import io.harness.exception.InvalidRequestException;
+import io.harness.exception.WingsException;
 import io.harness.security.encryption.SecretDecryptionService;
 
+import software.wings.helpers.ext.jenkins.BuildDetails;
 import software.wings.helpers.ext.jenkins.JobDetails;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.offbytwo.jenkins.model.Artifact;
+import com.offbytwo.jenkins.model.JobWithDetails;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,6 +36,7 @@ import lombok.AllArgsConstructor;
 @Singleton
 @AllArgsConstructor(access = AccessLevel.PACKAGE, onConstructor = @__({ @Inject }))
 public class JenkinsArtifactTaskHandler extends DelegateArtifactTaskHandler<JenkinsArtifactDelegateRequest> {
+  private static final int ARTIFACT_RETENTION_SIZE = 25;
   private final SecretDecryptionService secretDecryptionService;
   private final JenkinsRegistryService jenkinsRegistryService;
 
@@ -37,8 +50,39 @@ public class JenkinsArtifactTaskHandler extends DelegateArtifactTaskHandler<Jenk
   @Override
   public ArtifactTaskExecutionResponse getJob(JenkinsArtifactDelegateRequest artifactDelegateRequest) {
     List<JobDetails> jobDetails =
-        jenkinsRegistryService.getJobs(JenkinsRequestResponseMapper.toJenkinsInternalConfig(artifactDelegateRequest));
+        jenkinsRegistryService.getJobs(JenkinsRequestResponseMapper.toJenkinsInternalConfig(artifactDelegateRequest),
+            artifactDelegateRequest.getParentJobName());
     return ArtifactTaskExecutionResponse.builder().jobDetails(jobDetails).build();
+  }
+
+  @Override
+  public ArtifactTaskExecutionResponse getArtifactPaths(JenkinsArtifactDelegateRequest artifactDelegateRequest) {
+    try {
+      JobWithDetails jobDetails = jenkinsRegistryService.getJobWithDetails(
+          JenkinsRequestResponseMapper.toJenkinsInternalConfig(artifactDelegateRequest),
+          artifactDelegateRequest.getJobName());
+      List<String> artifactPath = Lists.newArrayList(jobDetails.getLastSuccessfulBuild()
+                                                         .details()
+                                                         .getArtifacts()
+                                                         .stream()
+                                                         .map(Artifact::getRelativePath)
+                                                         .distinct()
+                                                         .collect(toList()));
+      return ArtifactTaskExecutionResponse.builder().artifactPath(artifactPath).build();
+    } catch (WingsException e) {
+      throw e;
+    } catch (Exception ex) {
+      throw new ArtifactServerException(
+          "Error in artifact paths from jenkins server. Reason:" + ExceptionUtils.getMessage(ex), ex, USER);
+    }
+  }
+
+  @Override
+  public ArtifactTaskExecutionResponse getBuilds(JenkinsArtifactDelegateRequest attributesRequest) {
+    List<BuildDetails> buildDetails =
+        jenkinsRegistryService.getBuildsForJob(JenkinsRequestResponseMapper.toJenkinsInternalConfig(attributesRequest),
+            attributesRequest.getJobName(), attributesRequest.getArtifactPaths(), ARTIFACT_RETENTION_SIZE);
+    return ArtifactTaskExecutionResponse.builder().buildDetails(buildDetails).build();
   }
 
   private ArtifactTaskExecutionResponse getSuccessTaskExecutionResponse(
@@ -51,7 +95,7 @@ public class JenkinsArtifactTaskHandler extends DelegateArtifactTaskHandler<Jenk
   }
 
   boolean isRegex(JenkinsArtifactDelegateRequest artifactDelegateRequest) {
-    return EmptyPredicate.isNotEmpty(artifactDelegateRequest.getTagRegex());
+    return EmptyPredicate.isNotEmpty(artifactDelegateRequest.getBuildRegex());
   }
 
   @Override

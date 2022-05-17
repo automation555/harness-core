@@ -34,16 +34,13 @@ import lombok.Value;
 @EqualsAndHashCode(callSuper = false)
 @OwnedBy(HarnessTeam.PIPELINE)
 public class JenkinsArtifactDelegateRequest implements ArtifactSourceDelegateRequest {
-  /** Images in repos need to be referenced via a path. */
-  String imagePath;
-  /** Tag refers to exact tag number. */
-  String tag;
-  /** Tag regex is used to get latest build from builds matching regex. */
-  String tagRegex;
-  /** List of buildNumbers/tags */
-  List<String> tagsList;
+  String buildRegex;
+  /** List of buildNumbers/artifactPaths */
+  List<String> artifactPaths;
   String connectorRef;
   List<JobDetails> jobDetails;
+  String parentJobName;
+  String jobName;
   /** DockerHub Connector*/
   JenkinsConnectorDTO jenkinsConnectorDTO;
   /** Encrypted details for decrypting.*/

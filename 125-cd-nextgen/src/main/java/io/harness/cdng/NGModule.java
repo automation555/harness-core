@@ -11,6 +11,7 @@ import static io.harness.annotations.dev.HarnessTeam.CDP;
 
 import io.harness.WalkTreeModule;
 import io.harness.annotations.dev.OwnedBy;
+import io.harness.artifacts.jenkins.service.JenkinsRegistryServiceImpl;
 import io.harness.cdng.artifact.resources.acr.service.AcrResourceService;
 import io.harness.cdng.artifact.resources.acr.service.AcrResourceServiceImpl;
 import io.harness.cdng.artifact.resources.artifactory.service.ArtifactoryResourceService;
@@ -21,6 +22,8 @@ import io.harness.cdng.artifact.resources.ecr.service.EcrResourceService;
 import io.harness.cdng.artifact.resources.ecr.service.EcrResourceServiceImpl;
 import io.harness.cdng.artifact.resources.gcr.service.GcrResourceService;
 import io.harness.cdng.artifact.resources.gcr.service.GcrResourceServiceImpl;
+import io.harness.cdng.artifact.resources.jenkins.service.JenkinsResourceService;
+import io.harness.cdng.artifact.resources.jenkins.service.JenkinsResourceServiceImpl;
 import io.harness.cdng.artifact.resources.nexus.service.NexusResourceService;
 import io.harness.cdng.artifact.resources.nexus.service.NexusResourceServiceImpl;
 import io.harness.cdng.artifact.service.ArtifactSourceService;
@@ -106,6 +109,7 @@ public class NGModule extends AbstractModule {
     bind(EnvironmentGroupService.class).to(EnvironmentGroupServiceImpl.class);
     bind(AcrResourceService.class).to(AcrResourceServiceImpl.class);
     bind(AzureResourceService.class).to(AzureResourceServiceImpl.class);
+    bind(JenkinsResourceService.class).to(JenkinsResourceServiceImpl.class);
     bind(FilterService.class).to(FilterServiceImpl.class);
     bind(ClusterService.class).to(ClusterServiceImpl.class);
     bind(InfrastructureEntityService.class).to(InfrastructureEntityServiceImpl.class);

@@ -9,8 +9,18 @@ package io.harness.cdng.artifact.resources.jenkins.service;
 
 import io.harness.beans.IdentifierRef;
 import io.harness.cdng.artifact.resources.docker.dtos.DockerResponseDTO;
+import io.harness.cdng.artifact.resources.jenkins.dtos.JenkinsJobDetailsDTO;
 import io.harness.cdng.artifact.resources.jenkins.dtos.JenkinsResponseDTO;
 
+import software.wings.helpers.ext.jenkins.BuildDetails;
+
+import java.util.List;
+
 public interface JenkinsResourceService {
-  JenkinsResponseDTO getJobDetails(IdentifierRef dockerConnectorRef, String orgIdentifier, String projectIdentifier);
+  JenkinsJobDetailsDTO getJobDetails(
+      IdentifierRef dockerConnectorRef, String orgIdentifier, String projectIdentifier, String parentJobName);
+  List<String> getArtifactPath(
+      IdentifierRef jenkinsConnectorRef, String orgIdentifier, String projectIdentifier, String jobName);
+  List<BuildDetails> getBuildForJob(IdentifierRef jenkinsConnectorRef, String orgIdentifier, String projectIdentifier,
+      String jobName, List<String> artifactPath);
 }

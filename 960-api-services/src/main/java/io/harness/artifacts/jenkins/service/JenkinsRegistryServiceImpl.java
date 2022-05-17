@@ -15,11 +15,17 @@ import static io.harness.network.Http.connectableJenkinsHttpUrl;
 import io.harness.annotations.dev.OwnedBy;
 import io.harness.artifacts.jenkins.beans.JenkinsInternalConfig;
 import io.harness.exception.ArtifactServerException;
+import io.harness.exception.ExceptionUtils;
+import io.harness.exception.InvalidRequestException;
+import io.harness.exception.WingsException;
 
+import software.wings.helpers.ext.jenkins.BuildDetails;
 import software.wings.helpers.ext.jenkins.JobDetails;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.offbytwo.jenkins.model.JobWithDetails;
+import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,7 +56,25 @@ public class JenkinsRegistryServiceImpl implements JenkinsRegistryService {
   }
 
   @Override
-  public List<JobDetails> getJobs(JenkinsInternalConfig jenkinsInternalConfig) {
-    return jenkinsRegistryUtils.getJobs(jenkinsInternalConfig, null);
+  public List<JobDetails> getJobs(JenkinsInternalConfig jenkinsInternalConfig, String parentJobName) {
+    return jenkinsRegistryUtils.getJobs(jenkinsInternalConfig, parentJobName);
+  }
+
+  @Override
+  public JobWithDetails getJobWithDetails(JenkinsInternalConfig jenkinsInternalConfig, String jobName) {
+    return jenkinsRegistryUtils.getJobWithDetails(jenkinsInternalConfig, jobName);
+  }
+
+  @Override
+  public List<BuildDetails> getBuildsForJob(
+      JenkinsInternalConfig jenkinsInternalConfig, String jobname, List<String> artifactPaths, int lastN) {
+    try {
+      return jenkinsRegistryUtils.getBuildsForJob(jenkinsInternalConfig, jobname, artifactPaths, lastN);
+    } catch (WingsException e) {
+      throw e;
+    } catch (IOException ex) {
+      throw new InvalidRequestException(
+          "Failed to fetch build details jenkins server. Reason:" + ExceptionUtils.getMessage(ex), USER);
+    }
   }
 }

@@ -42,39 +42,6 @@ public class JenkinsArtifactTaskHelper {
     ArtifactTaskResponse artifactTaskResponse;
     try {
       switch (artifactTaskParameters.getArtifactTaskType()) {
-          //        case GET_LAST_SUCCESSFUL_BUILD:
-          //          saveLogs(executionLogCallback, "Fetching Artifact details");
-          //          artifactTaskResponse =
-          //          getSuccessTaskResponse(dockerArtifactTaskHandler.getLastSuccessfulBuild(attributes));
-          //          DockerArtifactDelegateResponse dockerArtifactDelegateResponse =
-          //              (DockerArtifactDelegateResponse) (artifactTaskResponse.getArtifactTaskExecutionResponse()
-          //                                                    .getArtifactDelegateResponses()
-          //                                                    .size()
-          //                          != 0
-          //                      ?
-          //                      artifactTaskResponse.getArtifactTaskExecutionResponse().getArtifactDelegateResponses().get(0)
-          //                      : DockerArtifactDelegateResponse.builder().build());
-          //          saveLogs(executionLogCallback,
-          //              "Fetched Artifact details \n  type: Dockerhub\n  imagePath: "
-          //                  + dockerArtifactDelegateResponse.getImagePath()
-          //                  + "\n  tag: " + dockerArtifactDelegateResponse.getTag());
-          //          break;
-          //        case GET_BUILDS:
-          //          saveLogs(executionLogCallback, "Fetching artifact details");
-          //          artifactTaskResponse = getSuccessTaskResponse(dockerArtifactTaskHandler.getBuilds(attributes));
-          //          saveLogs(executionLogCallback,
-          //              "Fetched " +
-          //              artifactTaskResponse.getArtifactTaskExecutionResponse().getArtifactDelegateResponses().size()
-          //                  + " artifacts");
-          //          break;
-          //        case GET_LABELS:
-          //          saveLogs(executionLogCallback, "Fetching labels");
-          //          artifactTaskResponse = getSuccessTaskResponse(dockerArtifactTaskHandler.getLabels(attributes));
-          //          saveLogs(executionLogCallback,
-          //              "Fetched labels: "
-          //                  +
-          //                  artifactTaskResponse.getArtifactTaskExecutionResponse().getArtifactDelegateResponses().toString());
-          //          break;
         case VALIDATE_ARTIFACT_SERVER:
           saveLogs(executionLogCallback, "Validating  Artifact Server");
           artifactTaskResponse = getSuccessTaskResponse(jenkinsArtifactTaskHandler.validateArtifactServer(attributes));
@@ -85,14 +52,16 @@ public class JenkinsArtifactTaskHelper {
           artifactTaskResponse = getSuccessTaskResponse(jenkinsArtifactTaskHandler.getJob(attributes));
           saveLogs(executionLogCallback, "Get the Jenkins Job " + registryUrl);
           break;
-          //        case VALIDATE_ARTIFACT_SOURCE:
-          //          saveLogs(executionLogCallback, "Validating Artifact Source");
-          //          artifactTaskResponse =
-          //          getSuccessTaskResponse(dockerArtifactTaskHandler.validateArtifactImage(attributes));
-          //          saveLogs(executionLogCallback,
-          //              "Artifact Source is valid: " + registryUrl + (registryUrl.endsWith("/") ? "" : "/")
-          //                  + attributes.getImagePath());
-          //          break;
+        case GET_ARTIFACT_PATH:
+          saveLogs(executionLogCallback, "Get the Jenkins Artifact Patb");
+          artifactTaskResponse = getSuccessTaskResponse(jenkinsArtifactTaskHandler.getArtifactPaths(attributes));
+          saveLogs(executionLogCallback, "Get the Jenkins Job " + registryUrl);
+          break;
+        case GET_BUILDS:
+          saveLogs(executionLogCallback, "Get the Jenkins Builds for Job");
+          artifactTaskResponse = getSuccessTaskResponse(jenkinsArtifactTaskHandler.getBuilds(attributes));
+          saveLogs(executionLogCallback, "Get the Jenkins Builds for Job " + registryUrl);
+          break;
         default:
           saveLogs(executionLogCallback,
               "No corresponding Docker artifact task type [{}]: " + artifactTaskParameters.toString());

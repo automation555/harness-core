@@ -7,6 +7,8 @@
 
 package io.harness.cdng.artifact.resources.jenkins.dtos;
 
+import software.wings.helpers.ext.jenkins.JobDetails;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 import lombok.AccessLevel;
@@ -18,6 +20,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class JenkinsResponseDTO {
-  List<String> artifactPath;
+public class JenkinsJobDetailsDTO {
+  List<JobDetails> jobDetails;
 }

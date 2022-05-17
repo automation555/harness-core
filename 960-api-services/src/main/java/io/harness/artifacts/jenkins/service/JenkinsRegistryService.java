@@ -12,9 +12,10 @@ import static io.harness.annotations.dev.HarnessTeam.CDC;
 import io.harness.annotations.dev.OwnedBy;
 import io.harness.artifacts.jenkins.beans.JenkinsInternalConfig;
 
+import software.wings.helpers.ext.jenkins.BuildDetails;
 import software.wings.helpers.ext.jenkins.JobDetails;
 
-import java.net.URISyntaxException;
+import com.offbytwo.jenkins.model.JobWithDetails;
 import java.util.List;
 
 @OwnedBy(CDC)
@@ -27,5 +28,8 @@ public interface JenkinsRegistryService {
    */
   boolean validateCredentials(JenkinsInternalConfig jenkinsInternalConfig);
 
-  List<JobDetails> getJobs(JenkinsInternalConfig jenkinsInternalConfig);
+  List<JobDetails> getJobs(JenkinsInternalConfig jenkinsInternalConfig, String parentJobName);
+  JobWithDetails getJobWithDetails(JenkinsInternalConfig jenkinsInternalConfig, String jobName);
+  List<BuildDetails> getBuildsForJob(
+      JenkinsInternalConfig jenkinsInternalConfig, String jobname, List<String> artifactPaths, int lastN);
 }

@@ -283,6 +283,8 @@ import io.harness.delegate.task.artifacts.ecr.EcrArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.ecr.EcrArtifactDelegateResponse;
 import io.harness.delegate.task.artifacts.gcr.GcrArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.gcr.GcrArtifactDelegateResponse;
+import io.harness.delegate.task.artifacts.jenkins.JenkinsArtifactDelegateRequest;
+import io.harness.delegate.task.artifacts.jenkins.JenkinsArtifactDelegateResponse;
 import io.harness.delegate.task.artifacts.nexus.NexusArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.nexus.NexusArtifactDelegateResponse;
 import io.harness.delegate.task.artifacts.request.ArtifactTaskParameters;
@@ -885,6 +887,7 @@ public class DelegateTasksBeansKryoRegister implements KryoRegistrar {
     kryo.register(ArtifactTaskResponse.class, 19301);
     kryo.register(DockerArtifactDelegateRequest.class, 19302);
     kryo.register(DockerArtifactDelegateResponse.class, 19303);
+    kryo.register(JenkinsArtifactDelegateResponse.class, 29300);
     kryo.register(ArtifactTaskType.class, 19304);
     kryo.register(ArtifactDelegateResponse.class, 19305);
     kryo.register(ArtifactTaskExecutionResponse.class, 19306);
@@ -1462,5 +1465,6 @@ public class DelegateTasksBeansKryoRegister implements KryoRegistrar {
     kryo.register(JenkinsTestConnectionTaskResponse.class, 29118);
     kryo.register(JenkinsCapabilityHelper.class, 29302);
     kryo.register(JenkinsValidationParams.class, 29303);
+    kryo.register(JenkinsArtifactDelegateRequest.class, 29304);
   }
 }
