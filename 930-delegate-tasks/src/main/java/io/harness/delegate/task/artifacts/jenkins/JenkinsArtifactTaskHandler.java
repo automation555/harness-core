@@ -6,6 +6,7 @@
  */
 
 package io.harness.delegate.task.artifacts.jenkins;
+
 import static io.harness.exception.WingsException.USER;
 
 import static java.util.stream.Collectors.toList;
@@ -17,7 +18,6 @@ import io.harness.delegate.task.artifacts.mappers.JenkinsRequestResponseMapper;
 import io.harness.delegate.task.artifacts.response.ArtifactTaskExecutionResponse;
 import io.harness.exception.ArtifactServerException;
 import io.harness.exception.ExceptionUtils;
-import io.harness.exception.InvalidRequestException;
 import io.harness.exception.WingsException;
 import io.harness.security.encryption.SecretDecryptionService;
 

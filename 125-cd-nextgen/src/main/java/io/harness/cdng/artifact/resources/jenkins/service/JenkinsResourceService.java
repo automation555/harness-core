@@ -8,9 +8,7 @@
 package io.harness.cdng.artifact.resources.jenkins.service;
 
 import io.harness.beans.IdentifierRef;
-import io.harness.cdng.artifact.resources.docker.dtos.DockerResponseDTO;
 import io.harness.cdng.artifact.resources.jenkins.dtos.JenkinsJobDetailsDTO;
-import io.harness.cdng.artifact.resources.jenkins.dtos.JenkinsResponseDTO;
 
 import software.wings.helpers.ext.jenkins.BuildDetails;
 

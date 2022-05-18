@@ -9,14 +9,10 @@ package io.harness.delegate.task.artifacts;
 
 import io.harness.annotations.dev.HarnessTeam;
 import io.harness.annotations.dev.OwnedBy;
-import io.harness.delegate.task.artifacts.docker.DockerArtifactDelegateRequest;
 import io.harness.delegate.task.artifacts.response.ArtifactTaskExecutionResponse;
 import io.harness.exception.InvalidRequestException;
 
-import software.wings.helpers.ext.jenkins.JobDetails;
-
 import java.net.URISyntaxException;
-import java.util.List;
 
 @OwnedBy(HarnessTeam.PIPELINE)
 public abstract class DelegateArtifactTaskHandler<T extends ArtifactSourceDelegateRequest> {

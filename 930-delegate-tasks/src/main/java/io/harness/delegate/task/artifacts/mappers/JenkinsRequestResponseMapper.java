@@ -15,8 +15,6 @@ import io.harness.delegate.beans.connector.jenkins.JenkinsUserNamePasswordDTO;
 import io.harness.delegate.task.artifacts.jenkins.JenkinsArtifactDelegateRequest;
 import io.harness.utils.FieldWithPlainTextOrSecretValueHelper;
 
-import software.wings.service.impl.jenkins.JenkinsUtils;
-
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

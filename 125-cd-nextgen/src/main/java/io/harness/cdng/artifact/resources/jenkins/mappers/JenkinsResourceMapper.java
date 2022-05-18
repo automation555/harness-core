@@ -7,13 +7,9 @@
 
 package io.harness.cdng.artifact.resources.jenkins.mappers;
 
-import io.harness.cdng.artifact.resources.docker.dtos.DockerBuildDetailsDTO;
 import io.harness.cdng.artifact.resources.jenkins.dtos.JenkinsJobDetailsDTO;
-import io.harness.cdng.artifact.resources.jenkins.dtos.JenkinsResponseDTO;
-import io.harness.delegate.task.artifacts.response.ArtifactBuildDetailsNG;
 import io.harness.delegate.task.artifacts.response.ArtifactTaskExecutionResponse;
 
-import java.util.List;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

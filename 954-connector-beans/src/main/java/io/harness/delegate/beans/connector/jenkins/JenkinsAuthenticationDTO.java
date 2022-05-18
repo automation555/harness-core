@@ -10,7 +10,6 @@ package io.harness.delegate.beans.connector.jenkins;
 import static io.harness.annotations.dev.HarnessTeam.CDC;
 
 import io.harness.annotations.dev.OwnedBy;
-import io.harness.delegate.beans.connector.docker.DockerAuthenticationDTODeserializer;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

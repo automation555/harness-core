@@ -20,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-@Slf4j
 @UtilityClass
+@Slf4j
 public class JenkinsClient {
   private CustomJenkinsHttpClient jenkinsHttpClient;
   public static final String TOKEN_FIELD = "Bearer Token(HTTP Header)";

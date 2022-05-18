@@ -28,8 +28,33 @@ public interface JenkinsRegistryService {
    */
   boolean validateCredentials(JenkinsInternalConfig jenkinsInternalConfig);
 
+  /**
+   * Get the Jobs for the Jenkins
+   *
+   * @param jenkinsInternalConfig the jenkins config
+   * @param parentJobName for the folder
+   * @return List<JobDetails>
+   */
   List<JobDetails> getJobs(JenkinsInternalConfig jenkinsInternalConfig, String parentJobName);
+
+  /**
+   * Get the Artifact Paths for the Jenkins
+   *
+   * @param jenkinsInternalConfig the jenkins config
+   * @param jobName for the job
+   * @return JobWithDetails
+   */
   JobWithDetails getJobWithDetails(JenkinsInternalConfig jenkinsInternalConfig, String jobName);
+
+  /**
+   * Get the Artifact Paths for the Jenkins
+   *
+   * @param jenkinsInternalConfig the jenkins config
+   * @param jobName for the job
+   * @param artifactPaths
+   * @param lastN for the build limit
+   * @return List<BuildDetails>
+   */
   List<BuildDetails> getBuildsForJob(
-      JenkinsInternalConfig jenkinsInternalConfig, String jobname, List<String> artifactPaths, int lastN);
+      JenkinsInternalConfig jenkinsInternalConfig, String jobName, List<String> artifactPaths, int lastN);
 }

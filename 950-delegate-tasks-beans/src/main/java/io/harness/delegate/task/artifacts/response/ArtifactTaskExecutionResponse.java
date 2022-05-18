@@ -14,7 +14,6 @@ import io.harness.annotations.dev.OwnedBy;
 import software.wings.helpers.ext.jenkins.BuildDetails;
 import software.wings.helpers.ext.jenkins.JobDetails;
 
-import com.offbytwo.jenkins.model.JobWithDetails;
 import java.util.List;
 import lombok.Builder;
 import lombok.Singular;

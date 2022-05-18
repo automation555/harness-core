@@ -11,16 +11,11 @@ import static io.harness.data.structure.EmptyPredicate.isNotEmpty;
 
 import io.harness.annotations.dev.HarnessTeam;
 import io.harness.annotations.dev.OwnedBy;
-import io.harness.artifacts.jenkins.service.JenkinsRegistryUtils;
-import io.harness.encryption.Encrypted;
 
-import com.github.reinert.jjschema.Attributes;
 import java.net.URI;
 import javax.ws.rs.core.UriBuilder;
 import lombok.Builder;
-import lombok.ToString;
 import lombok.Value;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Value
 @Builder

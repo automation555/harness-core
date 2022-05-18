@@ -7,9 +7,6 @@
 
 package io.harness.delegate.task.artifacts.response;
 
-import software.wings.helpers.ext.jenkins.JobDetails;
-
-import java.util.List;
 import java.util.Map;
 import lombok.Builder;
 import lombok.Value;

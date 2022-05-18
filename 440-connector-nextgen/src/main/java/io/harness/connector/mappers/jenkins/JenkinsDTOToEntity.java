@@ -11,6 +11,7 @@ import io.harness.annotations.dev.HarnessTeam;
 import io.harness.annotations.dev.OwnedBy;
 import io.harness.connector.entities.embedded.jenkins.JenkinsBearerTokenAuthentication;
 import io.harness.connector.entities.embedded.jenkins.JenkinsConnector;
+import io.harness.connector.entities.embedded.jenkins.JenkinsConnector.JenkinsConnectorBuilder;
 import io.harness.connector.entities.embedded.jenkins.JenkinsUserNamePasswordAuthentication;
 import io.harness.connector.mappers.ConnectorDTOToEntityMapper;
 import io.harness.delegate.beans.connector.ConnectorType;
@@ -29,7 +30,7 @@ public class JenkinsDTOToEntity implements ConnectorDTOToEntityMapper<JenkinsCon
   @Override
   public JenkinsConnector toConnectorEntity(JenkinsConnectorDTO configDTO) {
     JenkinsAuthType jenkinsAuthType = configDTO.getAuth().getAuthType();
-    JenkinsConnector.JenkinsConnectorBuilder jenkinsConnectorBuilder =
+    JenkinsConnectorBuilder jenkinsConnectorBuilder =
         JenkinsConnector.builder().url(StringUtils.trim(configDTO.getJenkinsUrl())).authType(jenkinsAuthType);
     if (jenkinsAuthType == JenkinsAuthType.USER_PASSWORD) {
       JenkinsUserNamePasswordDTO jenkinsUserNamePasswordDTO =

@@ -11,7 +11,6 @@ import static io.harness.annotations.dev.HarnessTeam.CDP;
 
 import io.harness.WalkTreeModule;
 import io.harness.annotations.dev.OwnedBy;
-import io.harness.artifacts.jenkins.service.JenkinsRegistryServiceImpl;
 import io.harness.cdng.artifact.resources.acr.service.AcrResourceService;
 import io.harness.cdng.artifact.resources.acr.service.AcrResourceServiceImpl;
 import io.harness.cdng.artifact.resources.artifactory.service.ArtifactoryResourceService;

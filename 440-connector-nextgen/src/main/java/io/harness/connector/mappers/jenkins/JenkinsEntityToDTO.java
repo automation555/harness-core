@@ -7,19 +7,12 @@
 
 package io.harness.connector.mappers.jenkins;
 
-import static io.harness.delegate.beans.connector.docker.DockerAuthType.ANONYMOUS;
-
 import io.harness.annotations.dev.HarnessTeam;
 import io.harness.annotations.dev.OwnedBy;
-import io.harness.connector.entities.embedded.docker.DockerConnector;
-import io.harness.connector.entities.embedded.docker.DockerUserNamePasswordAuthentication;
 import io.harness.connector.entities.embedded.jenkins.JenkinsBearerTokenAuthentication;
 import io.harness.connector.entities.embedded.jenkins.JenkinsConnector;
 import io.harness.connector.entities.embedded.jenkins.JenkinsUserNamePasswordAuthentication;
 import io.harness.connector.mappers.ConnectorEntityToDTOMapper;
-import io.harness.delegate.beans.connector.docker.DockerAuthenticationDTO;
-import io.harness.delegate.beans.connector.docker.DockerConnectorDTO;
-import io.harness.delegate.beans.connector.docker.DockerUserNamePasswordDTO;
 import io.harness.delegate.beans.connector.jenkins.JenkinsAuthType;
 import io.harness.delegate.beans.connector.jenkins.JenkinsAuthenticationDTO;
 import io.harness.delegate.beans.connector.jenkins.JenkinsBearerTokenDTO;

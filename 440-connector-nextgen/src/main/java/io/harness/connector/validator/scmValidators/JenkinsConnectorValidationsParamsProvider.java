@@ -15,8 +15,6 @@ import io.harness.connector.heartbeat.ConnectorValidationParamsProvider;
 import io.harness.connector.helper.EncryptionHelper;
 import io.harness.delegate.beans.connector.ConnectorConfigDTO;
 import io.harness.delegate.beans.connector.ConnectorValidationParams;
-import io.harness.delegate.beans.connector.docker.DockerConnectorDTO;
-import io.harness.delegate.beans.connector.docker.DockerValidationParams;
 import io.harness.delegate.beans.connector.jenkins.JenkinsConnectorDTO;
 import io.harness.delegate.beans.connector.jenkins.JenkinsValidationParams;
 import io.harness.security.encryption.EncryptedDataDetail;
