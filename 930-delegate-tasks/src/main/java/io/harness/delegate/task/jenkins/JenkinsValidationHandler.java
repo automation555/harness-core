@@ -9,6 +9,7 @@ package io.harness.delegate.task.jenkins;
 
 import io.harness.connector.ConnectivityStatus;
 import io.harness.connector.ConnectorValidationResult;
+import io.harness.connector.ConnectorValidationResult.ConnectorValidationResultBuilder;
 import io.harness.connector.task.ConnectorValidationHandler;
 import io.harness.delegate.beans.connector.ConnectorValidationParams;
 import io.harness.delegate.beans.connector.jenkins.JenkinsValidationParams;
@@ -42,8 +43,7 @@ public class JenkinsValidationHandler implements ConnectorValidationHandler {
     ArtifactTaskResponse validationResponse =
         jenkinsArtifactTaskHelper.getArtifactCollectResponse(artifactTaskParameters);
     boolean isDockerCredentialsValid = false;
-    ConnectorValidationResult.ConnectorValidationResultBuilder validationResultBuilder =
-        ConnectorValidationResult.builder();
+    ConnectorValidationResultBuilder validationResultBuilder = ConnectorValidationResult.builder();
     if (validationResponse.getArtifactTaskExecutionResponse() != null) {
       isDockerCredentialsValid = validationResponse.getArtifactTaskExecutionResponse().isArtifactServerValid();
     }
