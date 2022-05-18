@@ -33,7 +33,7 @@ public interface JenkinsRegistryService {
    *
    * @param jenkinsInternalConfig the jenkins config
    * @param parentJobName for the folder
-   * @return List<JobDetails>
+   * @return List JobDetails
    */
   List<JobDetails> getJobs(JenkinsInternalConfig jenkinsInternalConfig, String parentJobName);
 
@@ -53,7 +53,7 @@ public interface JenkinsRegistryService {
    * @param jobName for the job
    * @param artifactPaths
    * @param lastN for the build limit
-   * @return List<BuildDetails>
+   * @return List BuildDetails
    */
   List<BuildDetails> getBuildsForJob(
       JenkinsInternalConfig jenkinsInternalConfig, String jobName, List<String> artifactPaths, int lastN);
