@@ -134,7 +134,7 @@ public class JenkinsResourceServiceImpl implements JenkinsResourceService {
     } catch (DelegateServiceDriverException ex) {
       throw new HintException(
           String.format(HintException.DELEGATE_NOT_AVAILABLE, DocumentLinksConstants.DELEGATE_INSTALLATION_LINK),
-          new DelegateNotAvailableException(ex.getCause().getMessage(), WingsException.USER));
+          new DelegateNotAvailableException(ex.getCause().getMessage(), USER));
     } catch (ExplanationException e) {
       throw new HintException(
           HintException.HINT_DOCKER_HUB_ACCESS_DENIED, new InvalidRequestException(e.getMessage(), USER));
@@ -181,7 +181,7 @@ public class JenkinsResourceServiceImpl implements JenkinsResourceService {
       } else {
         throw new ArtifactServerException(
             "Unexpected error during authentication to docker server " + remoteMethodReturnValueData.getReturnValue(),
-            WingsException.USER);
+            USER);
       }
     }
     ArtifactTaskResponse artifactTaskResponse = (ArtifactTaskResponse) responseData;
