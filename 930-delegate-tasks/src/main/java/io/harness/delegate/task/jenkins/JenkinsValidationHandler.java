@@ -42,13 +42,13 @@ public class JenkinsValidationHandler implements ConnectorValidationHandler {
             .build();
     ArtifactTaskResponse validationResponse =
         jenkinsArtifactTaskHelper.getArtifactCollectResponse(artifactTaskParameters);
-    boolean isDockerCredentialsValid = false;
+    boolean isJenkinsCredentialsValid = false;
     ConnectorValidationResultBuilder validationResultBuilder = ConnectorValidationResult.builder();
     if (validationResponse.getArtifactTaskExecutionResponse() != null) {
-      isDockerCredentialsValid = validationResponse.getArtifactTaskExecutionResponse().isArtifactServerValid();
+      isJenkinsCredentialsValid = validationResponse.getArtifactTaskExecutionResponse().isArtifactServerValid();
     }
-    validationResultBuilder.status(isDockerCredentialsValid ? ConnectivityStatus.SUCCESS : ConnectivityStatus.FAILURE);
-    if (!isDockerCredentialsValid) {
+    validationResultBuilder.status(isJenkinsCredentialsValid ? ConnectivityStatus.SUCCESS : ConnectivityStatus.FAILURE);
+    if (!isJenkinsCredentialsValid) {
       String errorMessage = validationResponse.getErrorMessage();
       validationResultBuilder.errorSummary(ngErrorHelper.getErrorSummary(errorMessage))
           .errors(Collections.singletonList(ngErrorHelper.createErrorDetail(errorMessage)));
