@@ -29,7 +29,7 @@ public class JenkinsValidationParams
   String connectorName;
   @Override
   public List<ExecutionCapability> fetchRequiredExecutionCapabilities(ExpressionEvaluator maskingEvaluator) {
-    return DockerCapabilityHelper.fetchRequiredExecutionCapabilities(jenkinsConnectorDTO, maskingEvaluator);
+    return JenkinsCapabilityHelper.fetchRequiredExecutionCapabilities(jenkinsConnectorDTO, maskingEvaluator);
   }
 
   @Override

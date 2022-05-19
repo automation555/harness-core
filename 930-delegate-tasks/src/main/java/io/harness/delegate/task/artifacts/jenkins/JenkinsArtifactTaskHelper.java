@@ -64,23 +64,16 @@ public class JenkinsArtifactTaskHelper {
           break;
         default:
           saveLogs(executionLogCallback,
-              "No corresponding Docker artifact task type [{}]: " + artifactTaskParameters.toString());
-          log.error("No corresponding Docker artifact task type [{}]", artifactTaskParameters.toString());
+              "No corresponding Jenkins artifact task type [{}]: " + artifactTaskParameters.toString());
+          log.error("No corresponding Jenkins artifact task type [{}]", artifactTaskParameters.toString());
           return ArtifactTaskResponse.builder()
               .commandExecutionStatus(CommandExecutionStatus.FAILURE)
-              .errorMessage("There is no Docker artifact task type impl defined for - "
+              .errorMessage("There is no Jenkins artifact task type impl defined for - "
                   + artifactTaskParameters.getArtifactTaskType().name())
               .errorCode(ErrorCode.INVALID_ARGUMENT)
               .build();
       }
-    } catch (DockerHubServerRuntimeException ex) {
-      if (GlobalContextManager.get(MdcGlobalContextData.MDC_ID) == null) {
-        MdcGlobalContextData mdcGlobalContextData = MdcGlobalContextData.builder().map(new HashMap<>()).build();
-        GlobalContextManager.upsertGlobalContextRecord(mdcGlobalContextData);
-      }
-      ((MdcGlobalContextData) GlobalContextManager.get(MdcGlobalContextData.MDC_ID))
-          .getMap()
-          .put(ExceptionMetadataKeys.CONNECTOR.name(), attributes.getConnectorRef());
+    } catch (RuntimeException ex) {
       throw ex;
     }
     return artifactTaskResponse;
