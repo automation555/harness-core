@@ -123,7 +123,6 @@ public class SshSessionFactory {
       session = jsch.getSession(config.getUserName(), config.getHost(), config.getPort());
       byte[] password = EncryptionUtils.toBytes(config.getSshPassword(), Charsets.UTF_8);
       session.setPassword(password);
-      session.setConfig("PreferredAuthentications", "password");
       session.setUserInfo(new SshUserInfo(new String(password, Charsets.UTF_8)));
     } else if (config.isKeyLess()) {
       log.info("[SshSessionFactory]: SSH using KeyPath");
