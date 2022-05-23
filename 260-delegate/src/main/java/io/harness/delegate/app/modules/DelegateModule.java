@@ -1150,7 +1150,6 @@ public class DelegateModule extends AbstractModule {
     // HelmNG Task Handlers
 
     bind(DockerRegistryService.class).to(DockerRegistryServiceImpl.class);
-    bind(JenkinsRegistryService.class).to(JenkinsRegistryService.class);
     bind(NexusRegistryService.class).to(NexusRegistryServiceImpl.class);
     bind(ArtifactoryRegistryService.class).to(ArtifactoryRegistryServiceImpl.class);
     bind(HttpService.class).to(HttpServiceImpl.class);
