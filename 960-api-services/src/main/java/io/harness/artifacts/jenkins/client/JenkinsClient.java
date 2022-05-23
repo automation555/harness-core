@@ -38,15 +38,7 @@ public class JenkinsClient {
   }
 
   public JenkinsCustomServer getJenkinsServer(JenkinsInternalConfig jenkinsInternalConfig) throws URISyntaxException {
-    if (TOKEN_FIELD.equals(jenkinsInternalConfig.getAuthMechanism())) {
-      jenkinsHttpClient = new CustomJenkinsHttpClient(new URI(jenkinsInternalConfig.getJenkinsUrl()),
-          new String(jenkinsInternalConfig.getToken()), getUnSafeBuilder());
-      return new JenkinsCustomServer(jenkinsHttpClient);
-    } else {
-      jenkinsHttpClient = new CustomJenkinsHttpClient(new URI(jenkinsInternalConfig.getJenkinsUrl()),
-          jenkinsInternalConfig.getUsername(), new String(jenkinsInternalConfig.getPassword()), getUnSafeBuilder());
-      return new JenkinsCustomServer(jenkinsHttpClient);
-    }
+    return new JenkinsCustomServer(getJenkinsHttpClient(jenkinsInternalConfig));
   }
 
   private HttpClientBuilder getUnSafeBuilder() {

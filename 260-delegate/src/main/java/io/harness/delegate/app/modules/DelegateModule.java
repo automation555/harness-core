@@ -25,7 +25,6 @@ import io.harness.artifacts.docker.service.DockerRegistryServiceImpl;
 import io.harness.artifacts.gcr.service.GcrApiService;
 import io.harness.artifacts.gcr.service.GcrApiServiceImpl;
 import io.harness.artifacts.jenkins.service.JenkinsRegistryService;
-import io.harness.artifacts.jenkins.service.JenkinsRegistryServiceImpl;
 import io.harness.aws.AWSCloudformationClient;
 import io.harness.aws.AWSCloudformationClientImpl;
 import io.harness.aws.AwsClient;
@@ -1151,7 +1150,7 @@ public class DelegateModule extends AbstractModule {
     // HelmNG Task Handlers
 
     bind(DockerRegistryService.class).to(DockerRegistryServiceImpl.class);
-    bind(JenkinsRegistryService.class).to(JenkinsRegistryServiceImpl.class);
+    bind(JenkinsRegistryService.class).to(JenkinsRegistryService.class);
     bind(NexusRegistryService.class).to(NexusRegistryServiceImpl.class);
     bind(ArtifactoryRegistryService.class).to(ArtifactoryRegistryServiceImpl.class);
     bind(HttpService.class).to(HttpServiceImpl.class);

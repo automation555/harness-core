@@ -8,53 +8,69 @@
 package io.harness.artifacts.jenkins.service;
 
 import static io.harness.annotations.dev.HarnessTeam.CDC;
+import static io.harness.data.structure.EmptyPredicate.isEmpty;
+import static io.harness.exception.WingsException.USER;
+import static io.harness.network.Http.connectableJenkinsHttpUrl;
 
 import io.harness.annotations.dev.OwnedBy;
 import io.harness.artifacts.jenkins.beans.JenkinsInternalConfig;
+import io.harness.exception.ArtifactServerException;
+import io.harness.exception.ExceptionUtils;
+import io.harness.exception.InvalidRequestException;
+import io.harness.exception.WingsException;
 
 import software.wings.helpers.ext.jenkins.BuildDetails;
 import software.wings.helpers.ext.jenkins.JobDetails;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.offbytwo.jenkins.model.JobWithDetails;
+import java.io.IOException;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 @OwnedBy(CDC)
-public interface JenkinsRegistryService {
-  /**
-   * Validate the credentials
-   *
-   * @param jenkinsInternalConfig the jenkins config
-   * @return boolean validate
-   */
-  boolean validateCredentials(JenkinsInternalConfig jenkinsInternalConfig);
+@Singleton
+@Slf4j
+public class JenkinsRegistryService {
+  @Inject private JenkinsRegistryUtils jenkinsRegistryUtils;
 
-  /**
-   * Get the Jobs for the Jenkins
-   *
-   * @param jenkinsInternalConfig the jenkins config
-   * @param parentJobName for the folder
-   * @return List JobDetails
-   */
-  List<JobDetails> getJobs(JenkinsInternalConfig jenkinsInternalConfig, String parentJobName);
+  public boolean validateCredentials(JenkinsInternalConfig jenkinsInternalConfig) {
+    if (JenkinsRegistryUtils.TOKEN_FIELD.equals(jenkinsInternalConfig.getAuthMechanism())) {
+      if (isEmpty(new String(jenkinsInternalConfig.getToken()))) {
+        throw new ArtifactServerException("Token should be not empty", USER);
+      }
+    } else {
+      if (isEmpty(jenkinsInternalConfig.getUsername()) || isEmpty(new String(jenkinsInternalConfig.getPassword()))) {
+        throw new ArtifactServerException("UserName/Password should be not empty", USER);
+      }
+    }
 
-  /**
-   * Get the Artifact Paths for the Jenkins
-   *
-   * @param jenkinsInternalConfig the jenkins config
-   * @param jobName for the job
-   * @return JobWithDetails
-   */
-  JobWithDetails getJobWithDetails(JenkinsInternalConfig jenkinsInternalConfig, String jobName);
+    if (!connectableJenkinsHttpUrl(jenkinsInternalConfig.getJenkinsUrl())) {
+      throw new ArtifactServerException(
+          "Could not reach Jenkins Server at : " + jenkinsInternalConfig.getJenkinsUrl(), USER);
+    }
 
-  /**
-   * Get the Artifact Paths for the Jenkins
-   *
-   * @param jenkinsInternalConfig the jenkins config
-   * @param jobName for the job
-   * @param artifactPaths
-   * @param lastN for the build limit
-   * @return List BuildDetails
-   */
-  List<BuildDetails> getBuildsForJob(
-      JenkinsInternalConfig jenkinsInternalConfig, String jobName, List<String> artifactPaths, int lastN);
+    return jenkinsRegistryUtils.isRunning(jenkinsInternalConfig);
+  }
+
+  public List<JobDetails> getJobs(JenkinsInternalConfig jenkinsInternalConfig, String parentJobName) {
+    return jenkinsRegistryUtils.getJobs(jenkinsInternalConfig, parentJobName);
+  }
+
+  public JobWithDetails getJobWithDetails(JenkinsInternalConfig jenkinsInternalConfig, String jobName) {
+    return jenkinsRegistryUtils.getJobWithDetails(jenkinsInternalConfig, jobName);
+  }
+
+  public List<BuildDetails> getBuildsForJob(
+      JenkinsInternalConfig jenkinsInternalConfig, String jobname, List<String> artifactPaths, int lastN) {
+    try {
+      return jenkinsRegistryUtils.getBuildsForJob(jenkinsInternalConfig, jobname, artifactPaths, lastN);
+    } catch (WingsException e) {
+      throw e;
+    } catch (IOException ex) {
+      throw new InvalidRequestException(
+          "Failed to fetch build details jenkins server. Reason:" + ExceptionUtils.getMessage(ex), USER);
+    }
+  }
 }
