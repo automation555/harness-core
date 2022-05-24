@@ -11,6 +11,7 @@ java_library(
     deps = [
         "//:lombok",
         "//884-pms-commons:module",
+        "//945-account-mgmt:module",
         "//950-wait-engine:module",
         "//953-events-api:module",
         "//954-pms-contracts:module",

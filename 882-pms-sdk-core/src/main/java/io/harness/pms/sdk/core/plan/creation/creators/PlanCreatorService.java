@@ -11,8 +11,10 @@ import static io.harness.pms.sdk.PmsSdkModuleUtils.PLAN_CREATOR_SERVICE_EXECUTOR
 
 import static java.lang.String.format;
 
+import io.harness.account.AccountClient;
 import io.harness.annotations.dev.HarnessTeam;
 import io.harness.annotations.dev.OwnedBy;
+import io.harness.beans.FeatureName;
 import io.harness.data.structure.EmptyPredicate;
 import io.harness.exception.ExceptionUtils;
 import io.harness.exception.InvalidRequestException;
@@ -34,6 +36,7 @@ import io.harness.pms.contracts.plan.VariablesCreationBlobResponse;
 import io.harness.pms.contracts.plan.VariablesCreationResponse;
 import io.harness.pms.gitsync.PmsGitSyncBranchContextGuard;
 import io.harness.pms.gitsync.PmsGitSyncHelper;
+import io.harness.pms.merger.helpers.RuntimeInputFormHelper;
 import io.harness.pms.plan.creation.PlanCreatorUtils;
 import io.harness.pms.sdk.core.pipeline.filters.FilterCreatorService;
 import io.harness.pms.sdk.core.plan.creation.PlanCreationResponseBlobHelper;
@@ -44,6 +47,7 @@ import io.harness.pms.sdk.core.variables.VariableCreatorService;
 import io.harness.pms.utils.CompletableFutures;
 import io.harness.pms.yaml.YamlField;
 import io.harness.pms.yaml.YamlUtils;
+import io.harness.remote.client.RestClientUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -71,16 +75,18 @@ public class PlanCreatorService extends PlanCreationServiceImplBase {
   private final List<PartialPlanCreator<?>> planCreators;
   private final PlanCreationResponseBlobHelper planCreationResponseBlobHelper;
   private final PmsGitSyncHelper pmsGitSyncHelper;
-
+  private final AccountClient accountClient;
   @Inject
   public PlanCreatorService(@NotNull PipelineServiceInfoProvider pipelineServiceInfoProvider,
       @NotNull FilterCreatorService filterCreatorService, VariableCreatorService variableCreatorService,
-      PlanCreationResponseBlobHelper planCreationResponseBlobHelper, PmsGitSyncHelper pmsGitSyncHelper) {
+      PlanCreationResponseBlobHelper planCreationResponseBlobHelper, PmsGitSyncHelper pmsGitSyncHelper,
+      AccountClient accountClient) {
     this.planCreators = pipelineServiceInfoProvider.getPlanCreators();
     this.filterCreatorService = filterCreatorService;
     this.variableCreatorService = variableCreatorService;
     this.planCreationResponseBlobHelper = planCreationResponseBlobHelper;
     this.pmsGitSyncHelper = pmsGitSyncHelper;
+    this.accountClient = accountClient;
   }
 
   @Override
@@ -238,6 +244,15 @@ public class PlanCreatorService extends PlanCreationServiceImplBase {
   // Dependency passed from parent to its children plan creator
   private PlanCreationResponse createPlanForDependencyInternal(
       String currentYaml, YamlField field, PlanCreationContext ctx, Dependency dependency) {
+    String accountId = ctx.getGlobalContext().get("metadata").getAccountIdentifier();
+    if (RestClientUtils.getResponse(
+            accountClient.isFeatureFlagEnabled(FeatureName.NG_EXECUTION_INPUT.name(), accountId))) {
+      // TODO(BRIJESH): Hardcoding for steps for now. Will update the logic.
+      if (field.getName().equals("step")) {
+        ctx.setExecutionInputTemplate(RuntimeInputFormHelper.createExecutionInputFormAndUpdateYamlField(
+            field.getNode().getParentNode().getCurrJsonNode()));
+      }
+    }
     try (AutoLogContext ignore =
              PlanCreatorUtils.autoLogContext(ctx.getMetadata().getMetadata(), ctx.getMetadata().getAccountIdentifier(),
                  ctx.getMetadata().getOrgIdentifier(), ctx.getMetadata().getProjectIdentifier())) {

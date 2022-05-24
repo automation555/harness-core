@@ -101,6 +101,7 @@ public abstract class PMSStepPlanCreatorV2<T extends PmsAbstractStepNode> extend
             .stepType(stepElement.getStepSpecType().getStepType())
             .group(StepOutcomeGroup.STEP.name())
             .stepParameters(stepParameters)
+            .executionInputTemplate(ctx.getExecutionInputTemplate())
             .facilitatorObtainment(FacilitatorObtainment.newBuilder()
                                        .setType(FacilitatorType.newBuilder()
                                                     .setType(stepElement.getStepSpecType().getFacilitatorType())
