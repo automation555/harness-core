@@ -7,21 +7,15 @@
 
 package io.harness.delegate.task.artifacts.mappers;
 
-import static io.harness.data.structure.EmptyPredicate.isEmpty;
-import static io.harness.exception.WingsException.USER;
-import static io.harness.network.Http.connectableJenkinsHttpUrl;
-
 import io.harness.artifacts.jenkins.beans.JenkinsInternalConfig;
 import io.harness.data.structure.EmptyPredicate;
 import io.harness.delegate.beans.connector.jenkins.JenkinsBearerTokenDTO;
 import io.harness.delegate.beans.connector.jenkins.JenkinsConstant;
 import io.harness.delegate.beans.connector.jenkins.JenkinsUserNamePasswordDTO;
 import io.harness.delegate.task.artifacts.jenkins.JenkinsArtifactDelegateRequest;
-import io.harness.exception.ArtifactServerException;
 import io.harness.utils.FieldWithPlainTextOrSecretValueHelper;
 
 import software.wings.beans.JenkinsConfig;
-import software.wings.service.impl.jenkins.JenkinsUtils;
 
 import lombok.experimental.UtilityClass;
 

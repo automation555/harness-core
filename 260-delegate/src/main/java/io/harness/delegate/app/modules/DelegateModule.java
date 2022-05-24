@@ -24,7 +24,6 @@ import io.harness.artifacts.docker.service.DockerRegistryService;
 import io.harness.artifacts.docker.service.DockerRegistryServiceImpl;
 import io.harness.artifacts.gcr.service.GcrApiService;
 import io.harness.artifacts.gcr.service.GcrApiServiceImpl;
-import io.harness.artifacts.jenkins.service.JenkinsRegistryService;
 import io.harness.aws.AWSCloudformationClient;
 import io.harness.aws.AWSCloudformationClientImpl;
 import io.harness.aws.AwsClient;
