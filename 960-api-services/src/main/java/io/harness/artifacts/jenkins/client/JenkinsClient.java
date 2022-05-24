@@ -41,7 +41,7 @@ public class JenkinsClient {
     return new JenkinsCustomServer(getJenkinsHttpClient(jenkinsInternalConfig));
   }
 
-  private HttpClientBuilder getUnSafeBuilder() {
+  public static HttpClientBuilder getUnSafeBuilder() {
     RequestConfig.Builder requestBuilder = RequestConfig.custom();
     requestBuilder.setConnectTimeout(150 * 1000);
     requestBuilder.setConnectionRequestTimeout(150 * 1000);
