@@ -111,6 +111,11 @@ public class PMSPipelineServiceImpl implements PMSPipelineService {
   }
 
   @Override
+  public PipelineEntity clone(PipelineEntity destPipelineEntity) {
+    return create(destPipelineEntity);
+  }
+
+  @Override
   public Optional<PipelineEntity> get(
       String accountId, String orgIdentifier, String projectIdentifier, String identifier, boolean deleted) {
     try {

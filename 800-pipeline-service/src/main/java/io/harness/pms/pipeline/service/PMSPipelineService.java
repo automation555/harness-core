@@ -27,6 +27,8 @@ import org.springframework.data.mongodb.core.query.Update;
 public interface PMSPipelineService {
   PipelineEntity create(PipelineEntity pipelineEntity);
 
+  PipelineEntity clone(PipelineEntity destPipelineEntity);
+
   Optional<PipelineEntity> get(
       String accountId, String orgIdentifier, String projectIdentifier, String identifier, boolean deleted);
 

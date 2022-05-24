@@ -94,6 +94,13 @@ public class JsonNodeUtils {
     set.forEach(arrayNode::add);
   }
 
+  // To update the json node directly
+  public static JsonNode updatePropertyInObjectNode(JsonNode objectNode, String key, String... values) {
+    deletePropertiesInJsonNode((ObjectNode) objectNode, key);
+    upsertPropertyInObjectNode(objectNode, key, values);
+    return objectNode;
+  }
+
   public static JsonNode deletePropertiesInJsonNode(ObjectNode jsonNode, String... properties) {
     if (isEmpty(properties) || jsonNode == null) {
       return jsonNode;
