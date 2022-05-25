@@ -19,8 +19,8 @@ container_image(
 pkg_tar(
     name = "files",
     srcs = [
-        "//315-sto-manager:sto-manager-config.yml",
         "//315-sto-manager:keystore.jks",
+        "//315-sto-manager:sto-manager-config.yml",
         "//400-rest/src/main/resources:redisson-jcache.yaml",
     ],
     files = {
