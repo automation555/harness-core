@@ -37,7 +37,6 @@ public class STOExecutionRegistrar {
     engineSteps.put(SecurityStageStepPMS.STEP_TYPE, SecurityStageStepPMS.class);
     engineSteps.put(CodeBaseStep.STEP_TYPE, CodeBaseStep.class);
     engineSteps.put(CodeBaseTaskStep.STEP_TYPE, CodeBaseTaskStep.class);
-//    engineSteps.put(CISpecStep.STEP_TYPE, CISpecStep.class);
     engineSteps.putAll(NGCommonUtilStepsRegistrar.getEngineSteps());
     return engineSteps;
   }

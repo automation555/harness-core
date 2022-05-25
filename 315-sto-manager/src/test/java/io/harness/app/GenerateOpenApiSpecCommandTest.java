@@ -7,9 +7,8 @@
 
 package io.harness.app;
 
-import static io.harness.rule.OwnerRule.ASHISHSANODIA;
-
 import static io.harness.rule.OwnerRule.SERGEY;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

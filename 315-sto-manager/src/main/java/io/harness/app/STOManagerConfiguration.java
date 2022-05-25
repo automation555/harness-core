@@ -68,7 +68,9 @@ public class STOManagerConfiguration extends Configuration implements AssetsBund
       AssetsConfiguration.builder()
           .mimeTypes(of("js", "application/json; charset=UTF-8", "zip", "application/zip"))
           .build();
-  @Builder.Default @JsonProperty("stomanager-mongo") private MongoConfig harnessSTOMongo = MongoConfig.builder().build();
+  @Builder.Default
+  @JsonProperty("stomanager-mongo")
+  private MongoConfig harnessSTOMongo = MongoConfig.builder().build();
   @Builder.Default @JsonProperty("harness-mongo") private MongoConfig harnessMongo = MongoConfig.builder().build();
   @JsonProperty("pmsMongo") private MongoConfig pmsMongoConfig;
   @JsonProperty("swagger") private SwaggerBundleConfiguration swaggerBundleConfiguration;

@@ -123,7 +123,6 @@ public class STOYamlSchemaResource implements YamlSchemaResource {
       @QueryParam(NGCommonEntityConstants.ORG_KEY) String orgIdentifier, @QueryParam("scope") Scope scope,
       @RequestBody(required = true,
           description = "Step Schema with details") YamlSchemaDetailsWrapper yamlSchemaDetailsWrapper) {
-
     PartialSchemaDTO securitySchema = stoYamlSchemaService.getMergedStageYamlSchema(accountIdentifier,
         projectIdentifier, orgIdentifier, scope, yamlSchemaDetailsWrapper.getYamlSchemaWithDetailsList());
 
