@@ -15,6 +15,7 @@ import static io.harness.gitsync.common.scmerrorhandling.handlers.bitbucketcloud
 import io.harness.annotations.dev.OwnedBy;
 import io.harness.exception.NestedExceptionUtils;
 import io.harness.exception.ScmBadRequestException;
+import io.harness.exception.ScmConflictException;
 import io.harness.exception.ScmUnauthorizedException;
 import io.harness.exception.ScmUnexpectedException;
 import io.harness.exception.WingsException;

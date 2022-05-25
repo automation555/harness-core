@@ -15,6 +15,7 @@ import static io.harness.gitsync.common.scmerrorhandling.handlers.bitbucketcloud
 import io.harness.annotations.dev.OwnedBy;
 import io.harness.exception.NestedExceptionUtils;
 import io.harness.exception.ScmBadRequestException;
+import io.harness.exception.ScmConflictException;
 import io.harness.exception.ScmUnauthorizedException;
 import io.harness.exception.ScmUnexpectedException;
 import io.harness.exception.WingsException;
@@ -38,7 +39,7 @@ public class BitbucketServerCreateFileScmApiErrorHandler implements ScmApiErrorH
       case 409:
         throw NestedExceptionUtils.hintWithExplanationException(ScmErrorHints.FILE_ALREADY_EXISTS,
             CREATE_FILE_REQUEST_FAILURE + ScmErrorExplanations.FILE_ALREADY_EXISTS,
-            new ScmBadRequestException(errorMessage));
+            new ScmConflictException(errorMessage));
       default:
         throw new ScmUnexpectedException(errorMessage);
     }
