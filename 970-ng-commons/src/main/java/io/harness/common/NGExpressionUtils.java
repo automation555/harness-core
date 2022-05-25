@@ -32,6 +32,8 @@ public class NGExpressionUtils {
   private static final Pattern InputSetVariablePattern =
       Pattern.compile(EXPR_START_ESC + "input" + EXPR_END_ESC + ".*");
 
+  public static final String EXPRESSION_INPUT_CONSTANT = "executionInput";
+
   private static final Pattern ExecutionInputPattern = Pattern.compile(EXPR_START_ESC + "input" + EXPR_END_ESC + ".*"
       + ".executionInput\\(\\)"
       + ".*");
