@@ -238,12 +238,13 @@ public class PlanCreatorService extends PlanCreationServiceImplBase {
   // Dependency passed from parent to its children plan creator
   private PlanCreationResponse createPlanForDependencyInternal(
       String currentYaml, YamlField field, PlanCreationContext ctx, Dependency dependency) {
+    String executionInputTemplate = "";
     // Checking if ExecutionInput feature is enabled or not.
     if (ctx.getGlobalContext().get("metadata").getIsExecutionInputEnabled()) {
       // TODO(BRIJESH): Hardcoding for steps for now. Will update the logic.
       if (field.getName().equals("step")) {
-        ctx.setExecutionInputTemplate(RuntimeInputFormHelper.createExecutionInputFormAndUpdateYamlField(
-            field.getNode().getParentNode().getCurrJsonNode()));
+        executionInputTemplate = RuntimeInputFormHelper.createExecutionInputFormAndUpdateYamlField(
+            field.getNode().getParentNode().getCurrJsonNode());
       }
     }
     try (AutoLogContext ignore =
@@ -264,6 +265,7 @@ public class PlanCreatorService extends PlanCreationServiceImplBase {
         try {
           PlanCreationResponse planForField = planCreator.createPlanForField(
               PlanCreationContext.cloneWithCurrentField(ctx, field, currentYaml, dependency), obj);
+          planForField.setExecutionInputTemplateInPlanNode(executionInputTemplate);
           PlanCreatorServiceHelper.decorateNodesWithStageFqn(field, planForField);
           return planForField;
         } catch (Exception ex) {
