@@ -265,7 +265,9 @@ public class PlanCreatorService extends PlanCreationServiceImplBase {
         try {
           PlanCreationResponse planForField = planCreator.createPlanForField(
               PlanCreationContext.cloneWithCurrentField(ctx, field, currentYaml, dependency), obj);
-          planForField.setExecutionInputTemplateInPlanNode(executionInputTemplate);
+          if (!EmptyPredicate.isEmpty(executionInputTemplate)) {
+            planForField.setExecutionInputTemplateInPlanNode(executionInputTemplate);
+          }
           PlanCreatorServiceHelper.decorateNodesWithStageFqn(field, planForField);
           return planForField;
         } catch (Exception ex) {
