@@ -41,10 +41,6 @@ public class PmsSdkModule extends AbstractModule {
     return instance;
   }
 
-  public static PmsSdkModule getNewInstance(PmsSdkConfiguration config) {
-    return new PmsSdkModule(config);
-  }
-
   private PmsSdkModule(PmsSdkConfiguration config) {
     this.config = config;
   }

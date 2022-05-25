@@ -277,7 +277,7 @@ public class CIManagerApplication extends Application<CIManagerConfiguration> {
 
     PmsSdkConfiguration ciPmsSdkConfiguration = getPmsSdkConfiguration(
         configuration, ModuleType.CI, ExecutionRegistrar.getEngineSteps(), CIPipelineServiceInfoProvider.class);
-    modules.add(PmsSdkModule.getNewInstance(ciPmsSdkConfiguration));
+    modules.add(PmsSdkModule.getInstance(ciPmsSdkConfiguration));
 
     modules.add(PipelineServiceUtilityModule.getInstance());
 

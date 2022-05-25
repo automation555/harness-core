@@ -102,12 +102,8 @@ public class PmsSdkInitHelper {
     log.info("Initializing PMS SDK for module: {}", config.getModuleType());
     if (config.getDeploymentMode().isNonLocal()) {
       ServiceManager serviceManager =
-          injector.getInstance(Key.get(ServiceManager.class, Names.named("pmsSDKServiceManager")));
-
-      if (!serviceManager.isHealthy()) {
-        serviceManager.startAsync();
-        serviceManager.awaitHealthy();
-      }
+          injector.getInstance(Key.get(ServiceManager.class, Names.named("pmsSDKServiceManager"))).startAsync();
+      serviceManager.awaitHealthy();
 
       Runtime.getRuntime().addShutdownHook(new Thread(() -> serviceManager.stopAsync().awaitStopped()));
       registerSdk(injector, config);

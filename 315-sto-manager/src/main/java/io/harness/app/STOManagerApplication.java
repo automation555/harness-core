@@ -277,7 +277,7 @@ public class STOManagerApplication extends Application<STOManagerConfiguration> 
     // Pipeline Service Modules
     PmsSdkConfiguration stoPmsSdkConfiguration = getPmsSdkConfiguration(
         configuration, ModuleType.STO, STOExecutionRegistrar.getEngineSteps(), STOPipelineServiceInfoProvider.class);
-    modules.add(PmsSdkModule.getNewInstance(stoPmsSdkConfiguration));
+    modules.add(PmsSdkModule.getInstance(stoPmsSdkConfiguration));
 
     modules.add(PipelineServiceUtilityModule.getInstance());
 
