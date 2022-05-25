@@ -11,10 +11,8 @@ import static io.harness.pms.sdk.PmsSdkModuleUtils.PLAN_CREATOR_SERVICE_EXECUTOR
 
 import static java.lang.String.format;
 
-import io.harness.account.AccountClient;
 import io.harness.annotations.dev.HarnessTeam;
 import io.harness.annotations.dev.OwnedBy;
-import io.harness.beans.FeatureName;
 import io.harness.data.structure.EmptyPredicate;
 import io.harness.exception.ExceptionUtils;
 import io.harness.exception.InvalidRequestException;
@@ -47,7 +45,6 @@ import io.harness.pms.sdk.core.variables.VariableCreatorService;
 import io.harness.pms.utils.CompletableFutures;
 import io.harness.pms.yaml.YamlField;
 import io.harness.pms.yaml.YamlUtils;
-import io.harness.remote.client.RestClientUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -75,18 +72,15 @@ public class PlanCreatorService extends PlanCreationServiceImplBase {
   private final List<PartialPlanCreator<?>> planCreators;
   private final PlanCreationResponseBlobHelper planCreationResponseBlobHelper;
   private final PmsGitSyncHelper pmsGitSyncHelper;
-  private final AccountClient accountClient;
   @Inject
   public PlanCreatorService(@NotNull PipelineServiceInfoProvider pipelineServiceInfoProvider,
       @NotNull FilterCreatorService filterCreatorService, VariableCreatorService variableCreatorService,
-      PlanCreationResponseBlobHelper planCreationResponseBlobHelper, PmsGitSyncHelper pmsGitSyncHelper,
-      AccountClient accountClient) {
+      PlanCreationResponseBlobHelper planCreationResponseBlobHelper, PmsGitSyncHelper pmsGitSyncHelper) {
     this.planCreators = pipelineServiceInfoProvider.getPlanCreators();
     this.filterCreatorService = filterCreatorService;
     this.variableCreatorService = variableCreatorService;
     this.planCreationResponseBlobHelper = planCreationResponseBlobHelper;
     this.pmsGitSyncHelper = pmsGitSyncHelper;
-    this.accountClient = accountClient;
   }
 
   @Override
@@ -244,9 +238,8 @@ public class PlanCreatorService extends PlanCreationServiceImplBase {
   // Dependency passed from parent to its children plan creator
   private PlanCreationResponse createPlanForDependencyInternal(
       String currentYaml, YamlField field, PlanCreationContext ctx, Dependency dependency) {
-    String accountId = ctx.getGlobalContext().get("metadata").getAccountIdentifier();
-    if (RestClientUtils.getResponse(
-            accountClient.isFeatureFlagEnabled(FeatureName.NG_EXECUTION_INPUT.name(), accountId))) {
+    // Checking if ExecutionInput feature is enabled or not.
+    if (ctx.getGlobalContext().get("metadata").getIsExecutionInputEnabled()) {
       // TODO(BRIJESH): Hardcoding for steps for now. Will update the logic.
       if (field.getName().equals("step")) {
         ctx.setExecutionInputTemplate(RuntimeInputFormHelper.createExecutionInputFormAndUpdateYamlField(
