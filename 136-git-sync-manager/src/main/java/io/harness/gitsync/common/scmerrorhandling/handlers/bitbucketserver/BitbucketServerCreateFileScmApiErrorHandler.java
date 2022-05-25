@@ -13,7 +13,11 @@ import static io.harness.gitsync.common.scmerrorhandling.handlers.bitbucketcloud
 import static io.harness.gitsync.common.scmerrorhandling.handlers.bitbucketcloud.ScmErrorHints.REPO_NOT_FOUND;
 
 import io.harness.annotations.dev.OwnedBy;
-import io.harness.exception.*;
+import io.harness.exception.NestedExceptionUtils;
+import io.harness.exception.ScmBadRequestException;
+import io.harness.exception.ScmUnauthorizedException;
+import io.harness.exception.ScmUnexpectedException;
+import io.harness.exception.WingsException;
 import io.harness.gitsync.common.scmerrorhandling.handlers.ScmApiErrorHandler;
 
 @OwnedBy(PL)
