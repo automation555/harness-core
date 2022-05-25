@@ -9,7 +9,7 @@ package io.harness.pms.merger.helpers;
 
 import static io.harness.annotations.dev.HarnessTeam.PIPELINE;
 import static io.harness.expression.EngineExpressionEvaluator.EXPR_END_ESC;
-import static io.harness.expression.EngineExpressionEvaluator.EXPR_START_ESC;
+import static io.harness.expression.EngineExpressionEvaluator.EXPR_START;
 
 import io.harness.annotations.dev.OwnedBy;
 import io.harness.common.NGExpressionUtils;
@@ -53,7 +53,7 @@ public class RuntimeInputFormHelper {
       if (NGExpressionUtils.matchesExecutionInputPattern(value)) {
         templateMap.put(key, fullMap.get(key));
         fullMap.put(key,
-            EXPR_START_ESC + NGExpressionUtils.EXPRESSION_INPUT_CONSTANT + "." + key.getExpressionFqn() + EXPR_END_ESC);
+            EXPR_START + NGExpressionUtils.EXPRESSION_INPUT_CONSTANT + "." + key.getExpressionFqn() + EXPR_END_ESC);
       }
     });
     // Updating the executionInput field to expression in jsonNode.
