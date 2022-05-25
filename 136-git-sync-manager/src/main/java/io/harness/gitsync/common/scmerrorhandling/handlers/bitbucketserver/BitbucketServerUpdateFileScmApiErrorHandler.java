@@ -20,9 +20,9 @@ import io.harness.gitsync.common.scmerrorhandling.handlers.ScmApiErrorHandler;
 public class BitbucketServerUpdateFileScmApiErrorHandler implements ScmApiErrorHandler {
   public static final String UPDATE_FILE_REQUEST_FAILURE = "The requested file couldn't be updated in Bitbucket. ";
   public static final String UPDATE_FILE_CONFLICT_ERROR_HINT =
-          "Please check the input commit id of the requested file. It should match with current commit id of the file at head of the branch in the given Bitbucket repository";
+      "Please check the input commit id of the requested file. It should match with current commit id of the file at head of the branch in the given Bitbucket repository";
   public static final String UPDATE_FILE_CONFLICT_ERROR_EXPLANATION =
-          "The input commit id of the requested file doesn't match with current commit id of the file at head of the branch in Bitbucket repository, which results in update operation failure.";
+      "The input commit id of the requested file doesn't match with current commit id of the file at head of the branch in Bitbucket repository, which results in update operation failure.";
 
   @Override
   public void handleError(int statusCode, String errorMessage) throws WingsException {
@@ -30,14 +30,14 @@ public class BitbucketServerUpdateFileScmApiErrorHandler implements ScmApiErrorH
       case 401:
       case 403:
         throw NestedExceptionUtils.hintWithExplanationException(INVALID_CREDENTIALS,
-                UPDATE_FILE_REQUEST_FAILURE + INVALID_CONNECTOR_CREDS, new ScmUnauthorizedException(errorMessage));
+            UPDATE_FILE_REQUEST_FAILURE + INVALID_CONNECTOR_CREDS, new ScmUnauthorizedException(errorMessage));
       case 404:
         throw NestedExceptionUtils.hintWithExplanationException(REPO_NOT_FOUND,
-                UPDATE_FILE_REQUEST_FAILURE + ScmErrorExplanations.REPO_NOT_FOUND,
-                new ScmBadRequestException(errorMessage));
+            UPDATE_FILE_REQUEST_FAILURE + ScmErrorExplanations.REPO_NOT_FOUND,
+            new ScmBadRequestException(errorMessage));
       case 409:
         throw NestedExceptionUtils.hintWithExplanationException(UPDATE_FILE_CONFLICT_ERROR_HINT,
-                UPDATE_FILE_CONFLICT_ERROR_EXPLANATION, new ScmConflictException(errorMessage));
+            UPDATE_FILE_CONFLICT_ERROR_EXPLANATION, new ScmConflictException(errorMessage));
       default:
         throw new ScmUnexpectedException(errorMessage);
     }

@@ -19,9 +19,9 @@ public class ScmErrorHints {
   public static final String INVALID_CREDENTIALS = "Please check if your Bitbucket credentials are valid.";
   public static final String REPO_NOT_FOUND = "Please check if the requested Bitbucket repository exists.";
   public static final String REPO_OR_BRANCH_NOT_FOUND =
-          "Please check if the requested Bitbucket repository/branch exists.";
+      "Please check if the requested Bitbucket repository/branch exists.";
   public static final String PR_ALREADY_EXISTS =
-          "Please check if a PR already exists between given branches or the source branch is up to date with the target branch.";
+      "Please check if a PR already exists between given branches or the source branch is up to date with the target branch.";
   public static final String BRANCH_ALREADY_EXISTS = "Please check if the branch already exits in the repo.";
   public static final String FILE_ALREADY_EXISTS = "Please check if the file already exits in the repo.";
 }

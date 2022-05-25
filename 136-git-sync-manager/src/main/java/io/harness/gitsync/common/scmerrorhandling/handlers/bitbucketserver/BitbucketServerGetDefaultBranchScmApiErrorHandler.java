@@ -7,12 +7,13 @@
 
 package io.harness.gitsync.common.scmerrorhandling.handlers.bitbucketserver;
 
+import static io.harness.annotations.dev.HarnessTeam.PL;
+
 import io.harness.annotations.dev.OwnedBy;
 import io.harness.exception.*;
 import io.harness.gitsync.common.scmerrorhandling.handlers.ScmApiErrorHandler;
-import lombok.extern.slf4j.Slf4j;
 
-import static io.harness.annotations.dev.HarnessTeam.PL;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @OwnedBy(PL)
@@ -25,12 +26,12 @@ public class BitbucketServerGetDefaultBranchScmApiErrorHandler implements ScmApi
       case 401:
       case 403:
         throw NestedExceptionUtils.hintWithExplanationException(ScmErrorHints.INVALID_CREDENTIALS,
-                GET_DEFAULT_BRANCH_FAILED_MESSAGE + ScmErrorExplanations.INVALID_CONNECTOR_CREDS,
-                new ScmUnauthorizedException(errorMessage));
+            GET_DEFAULT_BRANCH_FAILED_MESSAGE + ScmErrorExplanations.INVALID_CONNECTOR_CREDS,
+            new ScmUnauthorizedException(errorMessage));
       case 404:
         throw NestedExceptionUtils.hintWithExplanationException(ScmErrorHints.REPO_NOT_FOUND,
-                GET_DEFAULT_BRANCH_FAILED_MESSAGE + ScmErrorExplanations.REPO_NOT_FOUND,
-                new ScmBadRequestException(errorMessage));
+            GET_DEFAULT_BRANCH_FAILED_MESSAGE + ScmErrorExplanations.REPO_NOT_FOUND,
+            new ScmBadRequestException(errorMessage));
       default:
         log.error(String.format("Error while fetching default bitbucket branch: [%s: %s]", statusCode, errorMessage));
         throw new ScmUnexpectedException(errorMessage);

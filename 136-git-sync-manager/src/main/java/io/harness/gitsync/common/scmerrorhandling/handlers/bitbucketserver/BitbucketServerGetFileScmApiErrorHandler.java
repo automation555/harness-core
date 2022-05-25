@@ -25,11 +25,11 @@ public class BitbucketServerGetFileScmApiErrorHandler implements ScmApiErrorHand
       case 401:
       case 403:
         throw NestedExceptionUtils.hintWithExplanationException(INVALID_CREDENTIALS,
-                GET_FILE_REQUEST_FAILURE + ScmErrorExplanations.INVALID_CONNECTOR_CREDS,
-                new ScmUnauthorizedException(errorMessage));
+            GET_FILE_REQUEST_FAILURE + ScmErrorExplanations.INVALID_CONNECTOR_CREDS,
+            new ScmUnauthorizedException(errorMessage));
       case 404:
         throw NestedExceptionUtils.hintWithExplanationException(FILE_NOT_FOUND, ScmErrorExplanations.FILE_NOT_FOUND,
-                new ScmBadRequestException(SCMExceptionErrorMessages.FILE_NOT_FOUND_ERROR));
+            new ScmBadRequestException(SCMExceptionErrorMessages.FILE_NOT_FOUND_ERROR));
       default:
         throw new ScmUnexpectedException(errorMessage);
     }

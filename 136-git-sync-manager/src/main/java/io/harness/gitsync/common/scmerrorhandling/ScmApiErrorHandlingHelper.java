@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @OwnedBy(PL)
 public class ScmApiErrorHandlingHelper {
-  public void processAndThrowError(ScmApis scmAPI, ConnectorType connectorType, String repoUrl, int statusCode, String errorMessage) {
+  public void processAndThrowError(
+      ScmApis scmAPI, ConnectorType connectorType, String repoUrl, int statusCode, String errorMessage) {
     ScmApiErrorHandler scmAPIErrorHandler = getScmAPIErrorHandler(scmAPI, connectorType, repoUrl);
     scmAPIErrorHandler.handleError(statusCode, errorMessage);
   }

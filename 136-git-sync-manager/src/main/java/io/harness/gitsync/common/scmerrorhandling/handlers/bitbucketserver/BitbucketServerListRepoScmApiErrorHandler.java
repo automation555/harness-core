@@ -22,14 +22,14 @@ import lombok.extern.slf4j.Slf4j;
 @OwnedBy(PL)
 public class BitbucketServerListRepoScmApiErrorHandler implements ScmApiErrorHandler {
   public static final String LIST_REPO_FAILED_MESSAGE = "Listing repositories from Github failed. ";
-  
+
   @Override
   public void handleError(int statusCode, String errorMessage) throws WingsException {
     switch (statusCode) {
       case 401:
       case 403:
         throw NestedExceptionUtils.hintWithExplanationException(ScmErrorHints.INVALID_CREDENTIALS,
-                LIST_REPO_FAILED_MESSAGE + ScmErrorExplanations.REPO_NOT_FOUND, new ScmUnauthorizedException(errorMessage));
+            LIST_REPO_FAILED_MESSAGE + ScmErrorExplanations.REPO_NOT_FOUND, new ScmUnauthorizedException(errorMessage));
       default:
         log.error(String.format("Error while listing bitbucket repos: [%s: %s]", statusCode, errorMessage));
         throw new ScmUnexpectedException(errorMessage);
