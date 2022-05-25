@@ -25,6 +25,7 @@ import io.harness.remote.CEAzureSetupConfig;
 import io.harness.remote.client.ServiceHttpClientConfig;
 import io.harness.secret.ConfigSecret;
 import io.harness.secret.SecretsConfiguration;
+import io.harness.telemetry.segment.SegmentConfiguration;
 import io.harness.timescaledb.TimeScaleDBConfig;
 
 import ch.qos.logback.access.spi.IAccessEvent;
@@ -49,11 +50,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.ws.rs.Path;
 import lombok.Getter;
@@ -97,6 +94,8 @@ public class CENextGenConfiguration extends Configuration {
   @JsonProperty(value = "gcpConfig") private GcpConfig gcpConfig;
   @JsonProperty(value = "ceAzureSetupConfig") @ConfigSecret private CEAzureSetupConfig ceAzureSetupConfig;
   @JsonProperty(value = "awsConfig") @ConfigSecret private AwsConfig awsConfig;
+
+  @JsonProperty("segmentConfiguration") @ConfigSecret private SegmentConfiguration segmentConfiguration;
 
   @JsonProperty(value = "hostname") private String hostname = "localhost";
   @JsonProperty(value = "basePathPrefix") private String basePathPrefix = "";
