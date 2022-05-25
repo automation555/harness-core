@@ -172,8 +172,8 @@ if [[ "" != "$MANAGER_AUTHORITY" ]]; then
   yq write -i $CONFIG_FILE managerAuthority $MANAGER_AUTHORITY
 fi
 
-if [[ "" != "$CIMANAGER_MONGO_URI" ]]; then
-  yq write -i $CONFIG_FILE cimanager-mongo.uri "$CIMANAGER_MONGO_URI"
+if [[ "" != "$STOMANAGER_MONGO_URI" ]]; then
+  yq write -i $CONFIG_FILE stomanager-mongo.uri "$STOMANAGER_MONGO_URI"
 fi
 
 if [[ "" != "$SCM_SERVICE_URI" ]]; then
