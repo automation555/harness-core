@@ -4,7 +4,7 @@
 # that can be found in the licenses directory at the root of this repository, also available at
 # https://polyformproject.org/wp-content/uploads/2020/05/PolyForm-Free-Trial-1.0.0.txt.
 
-CONFIG_FILE=/opt/harness/ci-manager-config.yml
+CONFIG_FILE=/opt/harness/sto-manager-config.yml
 REDISSON_CACHE_FILE=/opt/harness/redisson-jcache.yaml
 
 
@@ -77,6 +77,10 @@ fi
 
 if [[ "" != "$S3_UPLOAD_IMAGE" ]]; then
   yq write -i $CONFIG_FILE ciExecutionServiceConfig.stepConfig.s3UploadConfig.image "$S3_UPLOAD_IMAGE"
+fi
+
+if [[ "" != "$SECURITY_IMAGE" ]]; then
+  yq write -i $CONFIG_FILE ciExecutionServiceConfig.stepConfig.securityConfig.image "$SECURITY_IMAGE"
 fi
 
 if [[ "" != "$ARTIFACTORY_UPLOAD_IMAGE" ]]; then
