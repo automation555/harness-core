@@ -136,8 +136,7 @@ ceAzureSetupConfig:
   enableFileCheckAtSource: false
 
 ceGcpSetupConfig:
-  gcpProjectId: gcpProjectIdPlaceHolder
-  enableServiceAccountPermissionsCheck: true
+  enableServiceAccountPermissionsCheck: false
 
 awsConfig:
   accessKey: accessKey_placeholder
