@@ -1571,7 +1571,6 @@
 22012:io.harness.ModuleType
 26001:io.harness.connector.ConnectorDTO
 26002:io.harness.connector.ConnectorInfoDTO
-31010:java.lang.StackTraceElement[]
 29112:io.harness.delegate.beans.connector.jenkins.JenkinsAuthCredentialsDTO
 29113:io.harness.delegate.beans.connector.jenkins.JenkinsAuthenticationDTO
 29114:io.harness.delegate.beans.connector.jenkins.JenkinsAuthType
@@ -1584,6 +1583,7 @@
 29302:io.harness.delegate.beans.connector.jenkins.JenkinsCapabilityHelper
 29303:io.harness.delegate.beans.connector.jenkins.JenkinsValidationParams
 29304:io.harness.delegate.task.artifacts.jenkins.JenkinsArtifactDelegateRequest
+31010:java.lang.StackTraceElement[]
 31011:java.lang.StackTraceElement
 31012:io.harness.exception.DelegateErrorHandlerException
 31013:io.harness.exception.KryoHandlerNotFoundException
