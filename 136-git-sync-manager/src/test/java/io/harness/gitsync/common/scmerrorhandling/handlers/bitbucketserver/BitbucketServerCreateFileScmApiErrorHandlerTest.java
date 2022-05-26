@@ -14,11 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import io.harness.annotations.dev.HarnessTeam;
 import io.harness.annotations.dev.OwnedBy;
 import io.harness.category.element.UnitTests;
-import io.harness.exception.ExceptionUtils;
-import io.harness.exception.ScmBadRequestException;
-import io.harness.exception.ScmUnauthorizedException;
-import io.harness.exception.ScmUnexpectedException;
-import io.harness.exception.WingsException;
+import io.harness.exception.*;
 import io.harness.gitsync.GitSyncTestBase;
 import io.harness.rule.Owner;
 
@@ -85,7 +81,7 @@ public class BitbucketServerCreateFileScmApiErrorHandlerTest extends GitSyncTest
     try {
       bitbucketServerCreateFileScmApiErrorHandler.handleError(409, errorMessage);
     } catch (Exception ex) {
-      WingsException exception = ExceptionUtils.cause(ScmBadRequestException.class, ex);
+      WingsException exception = ExceptionUtils.cause(ScmConflictException.class, ex);
       assertThat(exception).isNotNull();
       assertThat(exception.getMessage()).isEqualTo(errorMessage);
     }
