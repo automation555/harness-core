@@ -27,6 +27,7 @@ from util import create_dataset, TABLE_NAME_FORMAT, if_tbl_exists, print_, creat
 
 
 def get_zones(project_id, credentials):
+    print(f"Getting zones for project_id: {project_id}")
     zones = []
     zones_to_region_mapping = dict()
     try:
@@ -167,7 +168,7 @@ def get_disk_row_for_deleted_disk(disk_id, project_id, snapshots):
     return {
         "id": disk_id,
         "name": disk_name,
-        "creationTime": None,
+        "creationTime": str(datetime(1970, 1, 1)),
         "zone": None,
         "region": None,
         "projectId": project_id,
@@ -259,13 +260,6 @@ def main(event, context):
                     disk_inserted[disk.get('id')] = True
                     data.append(get_data_to_insert(disk, zone, STATIC_ZONES_MAPPING[zone], jsonData["projectId"],
                                                    disk_to_snapshots_mapping))
-                    # todo: remove below log
-                    print("Adding a disk")
-                    print(disk.get('id'))
-                    print(disk.get('name'))
-                    print(zone)
-                    print(disk.get('status'))
-                    print("Disk was added successfully.")
             request = service.instances().list_next(previous_request=request, previous_response=response)
 
     for disk in disk_to_snapshots_mapping:

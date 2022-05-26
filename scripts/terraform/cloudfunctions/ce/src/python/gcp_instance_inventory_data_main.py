@@ -27,6 +27,7 @@ from util import create_dataset, TABLE_NAME_FORMAT, if_tbl_exists, print_, creat
 
 
 def get_zones(project_id, credentials):
+    print(f"Getting zones for project_id: {project_id}")
     zones = []
     zones_to_region_mapping = dict()
     try:
