@@ -18,7 +18,7 @@ import lombok.Data;
 @OwnedBy(PL)
 @Data
 @Builder
-@Schema(name = "AuditSettings", description = "This has the AuditSettings details defined in Harness.")
+@Schema(name = "AuditSettings", description = "Retention of Audit Logs in months.")
 public class AuditSettingsDTO {
   @Schema(description = "Retention time of the Audits in terms of months") @NotNull int retentionPeriodInMonths;
 }

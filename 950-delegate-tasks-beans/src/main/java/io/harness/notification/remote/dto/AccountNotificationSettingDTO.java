@@ -19,7 +19,7 @@ import lombok.Data;
 @Schema(name = "AccountNotificationSetting", description = "This has the Account Notification settings.")
 public class AccountNotificationSettingDTO {
   @Schema(description = "Account Identifier.") @NotNull String accountId;
-  @Schema(description = "Specify whether or not to send notifications via Delegate.")
+  @Schema(description = "Specify if notifications should be sent through Delegate.")
   Boolean sendNotificationViaDelegate;
   @Schema(description = "SMTP configuration.") SmtpConfig smtpConfig;
 }

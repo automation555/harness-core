@@ -18,8 +18,8 @@ import lombok.Data;
 @OwnedBy(PL)
 @Data
 @Builder
-@Schema(name = "YamlDiffRecord", description = "This has the Yaml Difference of the record.")
+@Schema(name = "YamlDiffRecord", description = "This has the YAML Difference of the record.")
 public class YamlDiffRecordDTO {
-  @Schema(description = "previous Yaml.") String oldYaml;
-  @Schema(description = "modified Yaml.") String newYaml;
+  @Schema(description = "Previous YAML version") String oldYaml;
+  @Schema(description = "Current YAML version") String newYaml;
 }

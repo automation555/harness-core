@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Schema(name = "EmailSettings", description = "This has the EmailSetting details defined in Harness.")
+@Schema(name = "EmailSettings", description = "Details of the Email settings configured in Harness.")
 public class EmailSettingDTO extends NotificationSettingDTO {
   @Schema(description = "Subject of the Email.") @NotNull private String subject;
   @Schema(description = "Body of the Email.") @NotNull private String body;

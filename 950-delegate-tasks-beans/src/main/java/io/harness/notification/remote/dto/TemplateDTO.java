@@ -15,7 +15,7 @@ import lombok.Data;
 
 @Data
 @Builder
-@Schema(name = "Template", description = "This has the Template details defined in Harness")
+@Schema(name = "Template", description = "Details of the Templates configured in Harness.")
 public class TemplateDTO {
   @Schema(description = "Identifier of the Template.") private String identifier;
   @Schema(description = "Team associated with the notification.") private Team team;

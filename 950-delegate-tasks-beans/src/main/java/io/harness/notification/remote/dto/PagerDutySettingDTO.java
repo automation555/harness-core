@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Schema(name = "PagerDutySetting", description = "This has the PagerDuty settings defined in Harness")
+@Schema(name = "PagerDutySetting", description = "Details of the Pager Duty settings configured in Harness.")
 public class PagerDutySettingDTO extends NotificationSettingDTO {
   @Builder
   public PagerDutySettingDTO(String accountId, String recipient) {

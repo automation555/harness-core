@@ -35,7 +35,7 @@ import lombok.Setter;
       @JsonSubTypes.Type(value = PagerDutySettingDTO.class, name = "PAGERDUTY"),
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Schema(name = "NotificationSetting", description = "This has the Notification setting details defined in Harness")
+@Schema(name = "NotificationSetting", description = "Details of the Notification settings configured in Harness.")
 public abstract class NotificationSettingDTO {
   @Schema(description = "Account Identifier.") @NotNull String accountId;
   @Schema(description = "Recipient of the notification.") @NotNull String recipient;

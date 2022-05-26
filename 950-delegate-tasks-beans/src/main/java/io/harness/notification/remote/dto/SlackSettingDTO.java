@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Schema(name = "SlackSetting", description = "This has the Slack settings defined in Harness")
+@Schema(name = "SlackSetting", description = "Details of the Slack settings configured in Harness.")
 public class SlackSettingDTO extends NotificationSettingDTO {
   @Builder
   public SlackSettingDTO(String accountId, String recipient) {

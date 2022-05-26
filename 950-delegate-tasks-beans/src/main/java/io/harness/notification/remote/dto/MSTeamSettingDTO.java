@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Schema(name = "MSTeamSetting", description = "This has the MSTeam setting details defined in Harness")
+@Schema(name = "MSTeamSetting", description = "Details of the MS Teams settings configured in Harness.")
 public class MSTeamSettingDTO extends NotificationSettingDTO {
   @Builder
   public MSTeamSettingDTO(String accountId, String recipient) {

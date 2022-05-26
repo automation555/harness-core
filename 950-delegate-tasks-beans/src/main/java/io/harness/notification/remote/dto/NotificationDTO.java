@@ -20,7 +20,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Schema(name = "Notification", description = "This has the Notification details defined in Harness.")
+@Schema(name = "Notification", description = "Details of the Notification settings configured in Harness.")
 public class NotificationDTO {
   @Schema(description = "Identifier of the notification.") String id;
   @Schema(description = "Account Identifier.") String accountIdentifier;
@@ -29,5 +29,5 @@ public class NotificationDTO {
   NotificationChannelType channelType;
   @Schema(description = "Boolean responses of whether or not the notification is sent.")
   List<Boolean> processingResponses;
-  @Schema(description = "Number of retries done to send the notification.") int retries;
+  @Schema(description = "The number of times the notification was resent.") int retries;
 }
